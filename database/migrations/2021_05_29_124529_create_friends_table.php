@@ -15,13 +15,13 @@ class CreateFriendsTable extends Migration
     {
         Schema::create('friends', function (Blueprint $table) {
             
-            $table->foreignId('following_user_id')->constrained('users', 'id');     // シナリオID      
-            $table->foreignId('followed_user_id')->constrained('users', 'id');      // キャラクターID
-            $table->datetimeTz('follow_at');                                        // 参加決定日
+            $table->char('following_friend_code', 12);     // フォローした人
+            $table->char('followed_friend_code', 12);      // フォローされた人
+            $table->datetimeTz('follow_at');               // 申請日
 
-            $table->primary(['following_user_id', 'followed_user_id']);		// 複合主キー
-
-            
+            $table->primary(['following_friend_code', 'followed_friend_code']);		    // 複合主キー
+            $table->foreign('following_friend_code')->references('friend_code')->on('users');
+            $table->foreign('followed_friend_code')->references('friend_code')->on('users');
         });
     }
 
