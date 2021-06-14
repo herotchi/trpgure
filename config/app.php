@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    //'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'trpgure'),
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +96,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    //'fallback_locale' => 'en',
     'fallback_locale' => 'ja',
 
     /*
@@ -231,6 +232,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'TopConsts' => App\Consts\TopConsts::class,
 
     ],
 
