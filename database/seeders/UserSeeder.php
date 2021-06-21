@@ -23,8 +23,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test1test1'),
             'remember_token' => '',
             'user_name' => 'test1',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('users')->insert([
@@ -33,8 +33,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test2test2'),
             'remember_token' => '',
             'user_name' => 'test2',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('users')->insert([
@@ -43,8 +43,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test3test3'),
             'remember_token' => '',
             'user_name' => 'test3',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }

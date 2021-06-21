@@ -18,8 +18,8 @@ class CreateCharactersTable extends Migration
             $table->char('user_friend_code', 12);           // フレンドコード
             $table->string('name', 100);                    // キャラクター名
             $table->text('character_sheet')->nullable();    // キャラクターシートURL
-            $table->datetimeTz('create_at');
-            $table->datetimeTz('update_at');
+            $table->datetimeTz('created_at');
+            $table->datetimeTz('updated_at');
 
             $table->index('user_friend_code');
             $table->foreign('user_friend_code')->references('friend_code')->on('users');

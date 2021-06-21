@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
             $table->string('password');	        // パスワード
             $table->rememberToken();			// 持続ログイン用カラム
             $table->string('user_name', 12);	// ユーザー名
-            $table->datetimeTz('create_at');
-            $table->datetimeTz('update_at');
+            $table->datetimeTz('created_at');
+            $table->datetimeTz('updated_at');
 
             $table->index('friend_code');
             $table->unique('login_id');

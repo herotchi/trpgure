@@ -31,8 +31,8 @@ class ScenarioSeeder extends Seeder
             'caution' => 'とっとこハム太郎３',
             'public_flg' => 1,
             'gm_memo' => 'とっとこハム太郎４',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('scenarios')->insert([
@@ -50,8 +50,8 @@ class ScenarioSeeder extends Seeder
             'caution' => 'ボンバイエ３',
             'public_flg' => 1,
             'gm_memo' => 'ボンバイエ４',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }

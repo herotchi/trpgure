@@ -30,8 +30,8 @@ class CreateScenariosTable extends Migration
             $table->text('caution')->nullable();						// 注意事項
             $table->tinyInteger('public_flg')->default(2)->unsigned();	// 公開フラグ
             $table->text('gm_memo')->nullable();						// GM用メモ
-            $table->datetimeTz('create_at');
-            $table->datetimeTz('update_at');
+            $table->datetimeTz('created_at');
+            $table->datetimeTz('updated_at');
 
             $table->index('user_friend_code');
             $table->foreign('user_friend_code')->references('friend_code')->on('users');

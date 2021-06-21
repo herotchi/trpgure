@@ -17,7 +17,7 @@ class CreateFriendsTable extends Migration
             
             $table->char('following_friend_code', 12);     // フォローした人
             $table->char('followed_friend_code', 12);      // フォローされた人
-            $table->datetimeTz('follow_at');               // 申請日
+            $table->datetimeTz('followed_at');               // 申請日
 
             $table->primary(['following_friend_code', 'followed_friend_code']);		    // 複合主キー
             $table->foreign('following_friend_code')->references('friend_code')->on('users');

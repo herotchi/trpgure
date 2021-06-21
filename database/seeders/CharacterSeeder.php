@@ -20,24 +20,24 @@ class CharacterSeeder extends Seeder
             'user_friend_code' => '12345678901b',
             'name' => 'キャラクター１',
             'character_sheet' => 'https://www.youtube.com',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('characters')->insert([
             'user_friend_code' => '12345678901c',
             'name' => 'キャラクター２',
             'character_sheet' => 'https://www.youtube.com',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('characters')->insert([
             'user_friend_code' => '12345678901b',
             'name' => 'キャラクター３',
             'character_sheet' => 'https://www.youtube.com',
-            'create_at' => now(),
-            'update_at' => now()
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }
