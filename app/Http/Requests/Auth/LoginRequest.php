@@ -4,6 +4,8 @@ namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use App\Consts\AuthConsts;
+
 class LoginRequest extends FormRequest
 {
     /**
@@ -25,8 +27,8 @@ class LoginRequest extends FormRequest
     {
         return [
             //
-            'login_id' => 'required|max:100',
-            'password' => 'required',
+            'login_id' => 'required|max:' . AuthConsts::LOGIN_ID_LENGTH_MAX,
+            'password' => 'required|max:' . AuthConsts::PASSWORD_LENGTH_MAX,
         ];
     }
 }

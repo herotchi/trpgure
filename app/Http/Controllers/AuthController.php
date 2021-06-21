@@ -32,7 +32,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login_id' => 'The provided credentials do not match our records.'
+            'login_id' => 'ログイン情報が間違っています。'
         ]);
     }
 
@@ -48,6 +48,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('show_login');
+        return redirect()->route('show_login')->with('msg_success', 'ログアウトしました');
     }
 }
