@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use Illuminate\Support\Facades\Hash;
+
+use App\Consts\UserConsts;
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    protected $table = 'users';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -17,8 +24,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'user_name',
+        'login_id',
         'password',
     ];
 
@@ -40,4 +47,41 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function insertUser(array $data)
+    {
+        $this->login_id = $data['login_id'];
+        $this->password = Hash::make($data['password']);
+        $this->user_name = $data['user_name'];
+        $this->friend_code = $this->generateFriendCode();
+        $this->save();
+    }
+
+
+    /**
+     * フレンドコードを生成する
+     *
+     * @return string $friendCode
+     */
+    public function generateFriendCode()
+    {
+        $count = 0;
+        
+        // 10回フレンドコードを生成してもユニークでなかった場合、ループを強制終了して例外を投げる
+        do {
+            $friendCode = substr(str_shuffle(UserConsts::FRIEND_CODE_STRING), 0, UserConsts::FRIEND_CODE_LENGTH);
+            $count++;
+            if ($count > UserConsts::FRIEND_CODE_GENERATE_LIMIT) {
+                break;
+            }
+        } while ($this->where('friend_code', $friendCode)->count() !== 0);
+
+        if ($count > UserConsts::FRIEND_CODE_GENERATE_LIMIT) {
+            throw new \Exception("アカウント作成に失敗しました。");
+        } else {
+            return $friendCode;
+        }
+
+    }
 }

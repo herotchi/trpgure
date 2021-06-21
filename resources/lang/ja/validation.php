@@ -149,6 +149,9 @@ return [
     'attributes' => [
         'login_id' => 'ログインID',
         'password' => 'パスワード',
+        'user_name' => 'ユーザー名',
+        'password_confirmation' => 'パスワード確認',
+        'user_policy' => '利用規約',
     ],
 
 ];

@@ -30,9 +30,11 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('show_login');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::get('/users/add', [UserController::class, 'add'])->name('users.add');
+    Route::post('/users/insert', [UserController::class, 'insert'])->name('users.insert');
 });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', TopController::class)->name('top');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/friend', [FridendController::class, 'manage'])->name('manage');
 });
