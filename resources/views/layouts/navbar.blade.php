@@ -28,8 +28,13 @@
 						<li><a class="dropdown-item" href="#">登録</a></li>
 					</ul>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">ユーザー</a>
+				<li class="nav-item dropdown">
+					<span class="nav-link dropdown-toggle" href="#" id="dropdown-user" data-bs-toggle="dropdown"
+						aria-expanded="false">{{ Auth::user()->user_name }}</span>
+					<ul class="dropdown-menu" aria-labelledby="dropdown-user">
+						<li><a class="dropdown-item" href="{{ route('users.edit') }}">ユーザー名変更</a></li>
+						<li><a class="dropdown-item" href="{{ route('users.login') }}">ログイン情報変更</a></li>
+					</ul>
 				</li>
 			</ul>
 			<div class="d-flex">

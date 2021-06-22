@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
 use App\Consts\UserConsts;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -56,6 +57,14 @@ class User extends Authenticatable
         $this->user_name = $data['user_name'];
         $this->friend_code = $this->generateFriendCode();
         $this->save();
+    }
+
+
+    public function updateUser(array $data)
+    {
+        $user = $this->find(Auth::user()->id);
+        $user->user_name = $data['user_name'];
+        $user->save();
     }
 
 

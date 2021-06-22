@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Http\Requests\User\AddRequest;
+use App\Http\Requests\User\EditRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -29,5 +31,24 @@ class UserController extends Controller
         });
 
         return redirect()->route('login')->with('msg_success', 'アカウントを作成しました');
+    }
+
+    public function edit()
+    {
+        return view('user.edit');
+    }
+
+    public function update(EditRequest $request)
+    {
+        DB::transaction(function () use($request) {
+            $this->user->updateUser($request->all());
+        });
+        
+        return redirect()->route('top')->with('msg_success', 'ユーザー名を変更しました');
+    }
+
+    public function login()
+    {
+        //return view('user.login');
     }
 }
