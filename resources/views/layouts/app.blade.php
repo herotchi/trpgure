@@ -38,7 +38,7 @@
     @if (Auth::check())
     @include('layouts.navbar')
     @endif
-    <div class="container">
+    <div class="container mt-3">
         <main>
         @yield('content')
         </main>

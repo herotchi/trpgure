@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\User;
 
+use Illuminate\Foundation\Http\FormRequest;
+
 use App\Consts\UserConsts;
 use App\Rules\AlphaDashJp;
-use Illuminate\Foundation\Http\FormRequest;
 
 class AddRequest extends FormRequest
 {
