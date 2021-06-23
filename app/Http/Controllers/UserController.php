@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Http\Requests\User\AddRequest;
 use App\Http\Requests\User\EditRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\User\LoginRequest;
 
 class UserController extends Controller
 {
@@ -49,6 +49,15 @@ class UserController extends Controller
 
     public function login()
     {
-        //return view('user.login');
+        return view('user.login');
+    }
+
+    public function login_update(LoginRequest $request)
+    {
+        DB::transaction(function () use($request) {
+            $this->user->updateLogin($request->all());
+        });
+
+        return redirect()->route('top')->with('msg_success', 'ログイン情報を変更しました');
     }
 }

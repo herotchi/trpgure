@@ -68,6 +68,16 @@ class User extends Authenticatable
     }
 
 
+    public function updateLogin(array $data)
+    {
+        $user = $this->find(Auth::user()->id);
+        $user->login_id = $data['login_id'];
+        if (strlen($data['password']) > 0) {
+            $user->password = Hash::make($data['password']);
+        }
+        $user->save();
+    }
+
     /**
      * フレンドコードを生成する
      *

@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-header">ユーザー名変更</div>
             <div class="card-body">
-                <form action="{{ route('users.update') }}" method="post">
+                <form action="{{ route('users.update') }}" method="post" novalidate>
                     @csrf
                     <div class="row g-3">
                         <div class="col-md-12">

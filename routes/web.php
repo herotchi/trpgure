@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
+    Route::post('/users/login_update', [UserController::class, 'login_update'])->name('users.login_update');
     Route::get('/friends/manage', [FridendController::class, 'manage'])->name('friends.manage');
     Route::get('/friends/add', [FridendController::class, 'add'])->name('friends.add');
 });
