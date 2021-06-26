@@ -15,6 +15,7 @@ class AddRequest extends FormRequest
     {
         $this->alphaDashJp = $alphaDashJp;
     }
+
     /**
      * Determine if the user is authorized to make this request.
      *

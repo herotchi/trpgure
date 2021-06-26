@@ -30,7 +30,7 @@ class UserController extends Controller
             $this->user->insertUser($request->all());
         });
 
-        return redirect()->route('login')->with('msg_success', 'アカウントを作成しました');
+        return redirect()->route('login')->with('msg_success', 'アカウントを作成しました。');
     }
 
     public function edit()
@@ -44,7 +44,7 @@ class UserController extends Controller
             $this->user->updateUser($request->all());
         });
         
-        return redirect()->route('top')->with('msg_success', 'ユーザー名を変更しました');
+        return redirect()->route('top')->with('msg_success', 'ユーザー名を変更しました。');
     }
 
     public function login()
@@ -58,6 +58,6 @@ class UserController extends Controller
             $this->user->updateLogin($request->all());
         });
 
-        return redirect()->route('top')->with('msg_success', 'ログイン情報を変更しました');
+        return redirect()->route('top')->with('msg_success', 'ログイン情報を変更しました。');
     }
 }

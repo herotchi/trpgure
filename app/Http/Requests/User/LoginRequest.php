@@ -7,9 +7,17 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Consts\UserConsts;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\AlphaDashJp;
 
 class LoginRequest extends FormRequest
 {
+    protected $alphaDashJp;
+
+    public function __construct(AlphaDashJp $alphaDashJp)
+    {
+        $this->alphaDashJp = $alphaDashJp;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *

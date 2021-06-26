@@ -11,7 +11,7 @@ class UserConsts
     public const PASSWORD_LENGTH_MIN = 6;
     public const PASSWORD_LENGTH_MAX = 20;
     public const FRIEND_CODE_LENGTH = 12;
-    public const FRIEND_CODE_STRING = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    public const FRIEND_CODE_STRING = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     public const FRIEND_CODE_GENERATE_LIMIT = 10;
     public const PUBLIC_FLG_PUBLIC = 1;
     public const PUBLIC_FLG_HIDDEN = 2;
