@@ -24,8 +24,8 @@
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-friend" data-bs-toggle="dropdown"
 						aria-expanded="false">フレンド</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown-friend">
-						<li><a class="dropdown-item" href="#">管理</a></li>
-						<li><a class="dropdown-item" href="#">登録</a></li>
+						<li><a class="dropdown-item" href="{{ route('friends.manage') }}">管理</a></li>
+						<li><a class="dropdown-item" href="{{ route('friends.add') }}">登録</a></li>
 					</ul>
 				</li>
 				<li class="nav-item dropdown">

@@ -49,6 +49,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // フォローしているユーザー
+    public function followings()
+    {
+        return $this->belongsToMany(self::class, 'friends', 'following_friend_code', 'followed_friend_code', 'friend_code', 'friend_code')->withPivot(['followed_at', 'users.id'])->orderBy('pivot_followed_at', 'desc')->orderBy('users.id', 'desc');
+    }
+
+    // フォローされているユーザー
+    public function followeds()
+    {
+        return $this->belongsToMany(self::class, 'friends', 'followed_friend_code', 'following_friend_code', 'friend_code', 'friend_code')->withPivot(['followed_at', 'users.id'])->orderBy('pivot_followed_at', 'desc')->orderBy('users.id', 'desc');
+    }
 
     public function insertUser(array $data)
     {
@@ -86,7 +97,7 @@ class User extends Authenticatable
     public function generateFriendCode()
     {
         $count = 0;
-        
+
         // 10回フレンドコードを生成してもユニークでなかった場合、ループを強制終了して例外を投げる
         do {
             $friendCode = substr(str_shuffle(UserConsts::FRIEND_CODE_STRING), 0, UserConsts::FRIEND_CODE_LENGTH);
@@ -101,6 +112,5 @@ class User extends Authenticatable
         } else {
             return $friendCode;
         }
-
     }
 }

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FriendController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +42,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
     Route::post('/users/login_update', [UserController::class, 'login_update'])->name('users.login_update');
-    Route::get('/friends/manage', [FridendController::class, 'manage'])->name('friends.manage');
-    Route::get('/friends/add', [FridendController::class, 'add'])->name('friends.add');
+    Route::get('/friends/manage', [FriendController::class, 'manage'])->name('friends.manage');
+    
+    Route::get('/friends/follow', [FriendController::class, 'follow'])->name('friends.follow');
+    Route::get('/friends/remove', [FriendController::class, 'remove'])->name('friends.remove');
+    
+    Route::get('/friends/add', [FriendController::class, 'add'])->name('friends.add');
+    Route::post('/friends/insert', [FriendController::class, 'insert'])->name('friends.insert');
+
 });
