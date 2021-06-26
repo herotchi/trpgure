@@ -152,6 +152,7 @@ return [
         'user_name' => 'ユーザー名',
         'password_confirmation' => 'パスワード確認',
         'user_policy' => '利用規約',
+        'friend_code' => 'フレンドコード',
     ],
 
 ];
