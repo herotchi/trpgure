@@ -92,6 +92,6 @@ class FriendController extends Controller
             $this->friend->follow(Auth::user()->friend_code, $request->friend_code);
         });
 
-        return redirect()->route('friends.maange')->with('msg_success', 'フレンドを登録しました。');
+        return redirect()->route('friends.manage')->with('msg_success', 'フレンドを登録しました。');
     }
 }
