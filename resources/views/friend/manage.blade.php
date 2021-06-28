@@ -25,12 +25,6 @@
         <div class="card">
             <div class="card-header">フレンド管理</div>
             <div class="card-body">
-
-                {{-- <form method="POST" action="{{ route('friends.remove') }}" id="remove_form" novalidate>
-                @csrf
-                <input type="hidden" name="friend_code" value="">
-                </form> --}}
-
                 <!-- タブ部分 -->
                 <ul id="myTab" class="nav nav-tabs mb-3" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -54,18 +48,11 @@
                                         {{ $following->user_name }}
                                     </div>
                                     <div class="col-sm-3 col-5 text-end">
-                                        {{-- <a class="btn btn-secondary btn-sm"
-                                            href="{{ route('friends.remove', ['friendCode' => $following->friend_code]) }}"
-                                        role="button">解除</a> --}}
                                         <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#removeModal"
                                             onclick="modal('{{ $following->user_name }}', '{{ $following->friend_code }}')">
                                             解除
                                         </button>
-                                        {{-- <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#removeModal" onclick="test('a', 'b')">
-                                            解除
-                                        </button> --}}
                                     </div>
                                 </div>
                             </li>
