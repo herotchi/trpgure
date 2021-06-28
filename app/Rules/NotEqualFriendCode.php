@@ -27,7 +27,7 @@ class NotEqualFriendCode implements Rule
      */
     public function passes($attribute, $value)
     {
-        // 自分自身をフォローしようとした場合、エラーにする
+        // 自分自身をフォロー、解除しようとした場合、エラーにする
         if (Auth::user()->friend_code === $value) {
             return false;
         }
@@ -42,6 +42,6 @@ class NotEqualFriendCode implements Rule
      */
     public function message()
     {
-        return '自分自身をフォローできません。';
+        return '自分自身は操作できません。';
     }
 }

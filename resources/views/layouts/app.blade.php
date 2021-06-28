@@ -28,6 +28,7 @@
     </style>
 
     <!-- Add Scripts -->
+    @stack('remove')
     @stack('datepicker')
     @stack('tinymce')
     @stack('reset')

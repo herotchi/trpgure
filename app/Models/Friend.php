@@ -40,4 +40,16 @@ class Friend extends Model
         $this->followed_friend_code = $followedFriendCode;
         $this->save();
     }
+
+    /**
+     * フォロー解除処理を行う
+     *
+     * @param string $followingFriendCode
+     * @param string $followedFriendCode
+     * @return void
+     */
+    public function remove(string $followingFriendCode, string $followedFriendCode)
+    {
+        $this->where('following_friend_code', $followingFriendCode)->where('followed_friend_code', $followedFriendCode)->delete();
+    }
 }

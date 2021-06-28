@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/login_update', [UserController::class, 'login_update'])->name('users.login_update');
     Route::get('/friends/manage', [FriendController::class, 'manage'])->name('friends.manage');
     
-    Route::get('/friends/follow', [FriendController::class, 'follow'])->name('friends.follow');
-    Route::get('/friends/remove', [FriendController::class, 'remove'])->name('friends.remove');
+    Route::get('/friends/follow/{friendCode}', [FriendController::class, 'follow'])->name('friends.follow');
+    Route::post('/friends/remove', [FriendController::class, 'remove'])->name('friends.remove');
     
     Route::get('/friends/add', [FriendController::class, 'add'])->name('friends.add');
     Route::post('/friends/insert', [FriendController::class, 'insert'])->name('friends.insert');
