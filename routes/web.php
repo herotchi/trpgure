@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\ScenarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,16 +39,17 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/', TopController::class)->name('top');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/users/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
     Route::post('/users/login_update', [UserController::class, 'login_update'])->name('users.login_update');
-    Route::get('/friends/manage', [FriendController::class, 'manage'])->name('friends.manage');
     
+    Route::get('/friends/manage', [FriendController::class, 'manage'])->name('friends.manage');
     Route::get('/friends/follow/{friendCode}', [FriendController::class, 'follow'])->name('friends.follow');
     Route::post('/friends/remove', [FriendController::class, 'remove'])->name('friends.remove');
-    
     Route::get('/friends/add', [FriendController::class, 'add'])->name('friends.add');
     Route::post('/friends/insert', [FriendController::class, 'insert'])->name('friends.insert');
 
+    Route::get('/scenarios/list', [ScenarioController::class, 'list'])->name('scenarios.list');
 });
