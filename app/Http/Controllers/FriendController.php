@@ -64,7 +64,7 @@ class FriendController extends Controller
         }
 
         DB::transaction(function () use($friendCode) {
-            $this->friend->follow(Auth::user()->friend_code, $friendCode);
+            $this->friend->followUser(Auth::user()->friend_code, $friendCode);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フレンドを登録しました。');
@@ -74,7 +74,7 @@ class FriendController extends Controller
     public function remove(RemoveRequest $request)
     {
         DB::transaction(function () use($request) {
-            $this->friend->remove(Auth::user()->friend_code, $request->friend_code);
+            $this->friend->removeFollow(Auth::user()->friend_code, $request->friend_code);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フォローを解除しました。');
@@ -88,8 +88,9 @@ class FriendController extends Controller
 
     public function insert(AddRequest $request)
     {
-        DB::transaction(function () use($request) {
-            $this->friend->follow(Auth::user()->friend_code, $request->friend_code);
+        $data = $request->validated();
+        DB::transaction(function () use($data) {
+            $this->friend->followUser(Auth::user()->friend_code, $data['friend_code']);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フレンドを登録しました。');

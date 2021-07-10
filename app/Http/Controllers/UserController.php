@@ -27,7 +27,7 @@ class UserController extends Controller
     public function insert(AddRequest $request)
     {
         DB::transaction(function () use($request) {
-            $this->user->insertUser($request->all());
+            $this->user->insertUser($request->validated());
         });
 
         return redirect()->route('login')->with('msg_success', 'アカウントを作成しました。');
@@ -41,7 +41,7 @@ class UserController extends Controller
     public function update(EditRequest $request)
     {
         DB::transaction(function () use($request) {
-            $this->user->updateUser($request->all());
+            $this->user->updateUser($request->validated());
         });
         
         return redirect()->route('top')->with('msg_success', 'ユーザー名を変更しました。');
@@ -55,7 +55,7 @@ class UserController extends Controller
     public function login_update(LoginRequest $request)
     {
         DB::transaction(function () use($request) {
-            $this->user->updateLogin($request->all());
+            $this->user->updateLogin($request->validated());
         });
 
         return redirect()->route('top')->with('msg_success', 'ログイン情報を変更しました。');
