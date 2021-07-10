@@ -17,13 +17,13 @@
             <div class="card-body">
                 <div class="list-group">
                     @foreach($lists as $list)
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="{{ route('scenarios.detail', ['id' => $list->id]) }}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ $list->title }}</h5>
-                            <small>作：{{ $list->users->user_name }}</small>
+                            <span>作：{{ $list->users->user_name }}</span>
                         </div>
                         <p class="mb-1 ml-4 text-truncate">
-                            <span class="font-weight-bold">概要</span>：{{ Str::limit($list->summary, 30, '...') }}
+                            <span class="font-weight-bold">概要</span>：{{ $list->summary }}
                         </p>
                         <p class="mb-1 ml-4">
                             <span class="font-weight-bold">募集期間</span>：
