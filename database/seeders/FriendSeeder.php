@@ -29,6 +29,12 @@ class FriendSeeder extends Seeder
         ]);
 
         DB::table('friends')->insert([
+            'following_friend_code' => '12345678901b',
+            'followed_friend_code' => '12345678901c',
+            'followed_at' => now()
+        ]);
+
+        DB::table('friends')->insert([
             'following_friend_code' => '12345678901a',
             'followed_friend_code' => '12345678901c',
             'followed_at' => now()
