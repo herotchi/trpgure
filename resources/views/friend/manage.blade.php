@@ -101,7 +101,7 @@
                 <div class="modal-body">
                     <p>フォローを解除するとフォローしていたユーザーが作成したシナリオを閲覧したり参加することができなくなります。</p>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-primary w-50">フォロー解除</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
                 </div><!-- /.modal-footer -->

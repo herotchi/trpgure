@@ -10,9 +10,6 @@
         <li class="breadcrumb-item active" aria-current="page">フレンド登録</li>
     </ol>
 </nav>
-@php
-    //var_dump($errors);
-@endphp
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
