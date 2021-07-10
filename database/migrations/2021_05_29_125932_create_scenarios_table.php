@@ -17,7 +17,7 @@ class CreateScenariosTable extends Migration
             
             $table->id();                                               // シーケンスID
             $table->char('user_friend_code', 12);                       // フレンドコード
-            $table->string('title', 100);										// タイトル
+            $table->string('title', 100);								// タイトル
             $table->text('summary')->nullable();						// 概要
             $table->date('part_period_start')->nullable();				// 参加募集開始日時
             $table->date('part_period_end')->nullable();				// 参加募集終了日時
@@ -33,10 +33,7 @@ class CreateScenariosTable extends Migration
             $table->datetimeTz('created_at');
             $table->datetimeTz('updated_at');
 
-            $table->index('user_friend_code');
             $table->foreign('user_friend_code')->references('friend_code')->on('users');
-
-
         });
     }
 

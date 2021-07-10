@@ -20,15 +20,21 @@
     <link href="{{ asset('css/offcanvas.css') }}" rel="stylesheet">
     @stack('login')
     @stack('add_user')
-
     <style>
         body {
             font-family: 'Nunito', sans-serif;
         }
     </style>
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/offcanvas.js') }}" defer></script>
+
     <!-- Add Scripts -->
     @stack('remove')
+    @stack('modal_validation')
     @stack('datepicker')
     @stack('tinymce')
     @stack('reset')
@@ -52,11 +58,6 @@
             </ul>
         </footer>
     </div>
-    <!-- Scripts -->
-    <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/toastr.min.js') }}"></script>
     @include('layouts.flash')
-    <script src="{{ asset('js/offcanvas.js') }}"></script>
 </body>
 </html>

@@ -52,4 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/friends/insert', [FriendController::class, 'insert'])->name('friends.insert');
 
     Route::get('/scenarios/list', [ScenarioController::class, 'list'])->name('scenarios.list');
+    Route::get('/scenarios/detail/{id}', [ScenarioController::class, 'detail'])->name('scenarios.detail');
+    Route::post('/scenarios/join', [ScenarioController::class, 'join'])->name('scenarios.join');
+    Route::get('/scenarios/add', [ScenarioController::class, 'add'])->name('scenarios.add');
+    Route::post('/scenarios/insert', [ScenarioController::class, 'insert'])->name('scenarios.insert');
 });
