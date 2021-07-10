@@ -27,7 +27,6 @@ class User extends Authenticatable
     protected $fillable = [
         'user_name',
         'login_id',
-        'password',
     ];
 
     /**
@@ -61,6 +60,19 @@ class User extends Authenticatable
         return $this->belongsToMany(self::class, 'friends', 'followed_friend_code', 'following_friend_code', 'friend_code', 'friend_code')->withPivot(['followed_at', 'users.id'])->orderBy('pivot_followed_at', 'desc')->orderBy('users.id', 'desc');
     }
 
+    public function getFriendList()
+    {
+        /*
+        $query = $this::query();
+        $query->where('following_friend_code', $followingFriendCode);
+        $query->orderBy('followed_at', 'desc');
+        $lists = $query->get();
+*/
+        $lists = $this->find(Auth::user()->id);
+        return $lists;
+    }
+
+
     public function insertUser(array $data)
     {
         $this->login_id = $data['login_id'];
@@ -71,6 +83,12 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * ユーザー名を更新する
+     *
+     * @param array $data
+     * @return void
+     */
     public function updateUser(array $data)
     {
         $user = $this->find(Auth::user()->id);
@@ -79,10 +97,17 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * ログイン情報を更新する
+     *
+     * @param array $data
+     * @return void
+     */
     public function updateLogin(array $data)
     {
         $user = $this->find(Auth::user()->id);
         $user->login_id = $data['login_id'];
+        // パスワードが変更された場合
         if (strlen($data['password']) > 0) {
             $user->password = Hash::make($data['password']);
         }
