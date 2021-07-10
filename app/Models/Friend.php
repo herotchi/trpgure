@@ -34,7 +34,7 @@ class Friend extends Model
      * @param string $followedFriendCode フォロー対象のフレンドコード
      * @return void
      */
-    public function follow(string $followingFriendCode, string $followedFriendCode)
+    public function followUser(string $followingFriendCode, string $followedFriendCode)
     {
         $this->following_friend_code = $followingFriendCode;
         $this->followed_friend_code = $followedFriendCode;
@@ -44,11 +44,11 @@ class Friend extends Model
     /**
      * フォロー解除処理を行う
      *
-     * @param string $followingFriendCode
-     * @param string $followedFriendCode
+     * @param string $followingFriendCode 自分のフレンドコード
+     * @param string $followedFriendCode フォロー解除対象のフレンドコード
      * @return void
      */
-    public function remove(string $followingFriendCode, string $followedFriendCode)
+    public function removeFollow(string $followingFriendCode, string $followedFriendCode)
     {
         $this->where('following_friend_code', $followingFriendCode)->where('followed_friend_code', $followedFriendCode)->delete();
     }
