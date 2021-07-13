@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Consts\UserConsts;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Friend;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use App\Rules\AlphaNumJp;
+use App\Rules\NotEqualFriendCode;
 use App\Http\Requests\Friend\AddRequest;
-use App\Http\Requests\Friend\FollowRequest;
 use App\Http\Requests\Friend\RemoveRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,11 +21,15 @@ class FriendController extends Controller
     //
     protected $friend;
     protected $user;
+    protected $alphaNumJp;
+    protected $notEqualFriendCode;
 
-    public function __construct(Friend $friend, User $user)
+    public function __construct(Friend $friend, User $user, AlphaNumJp $alphaNumJp, NotEqualFriendCode $notEqualFriendCode)
     {
         $this->friend = $friend;
         $this->user = $user;
+        $this->alphaNumJp = $alphaNumJp;
+        $this->notEqualFriendCode = $notEqualFriendCode;
     }
 
 
@@ -34,12 +42,28 @@ class FriendController extends Controller
     }
 
 
-    public function follow(FollowRequest $request)
+    public function follow($friendCode)
     {
-        $input = $request->validated();
+        $validator = Validator::make(
+            ['friend_code' => $friendCode],
+            ['friend_code' => [
+                'bail', 
+                'required', 
+                'string', 
+                'size:' . UserConsts::FRIEND_CODE_LENGTH, 
+                $this->alphaNumJp,
+                'exists:users,friend_code',
+                $this->notEqualFriendCode,
+                Rule::unique('friends', 'followed_friend_code')->where('following_friend_code', Auth::user()->friend_code)
+            ]]
+        );
 
-        DB::transaction(function () use($input) {
-            $this->friend->followUser(Auth::user()->friend_code, $input['friend_code']);
+        if ($validator->fails()) {
+            return redirect()->route('friends.manage')->with('msg_failure', '不正な値が入力されました。');
+        }
+
+        DB::transaction(function () use($friendCode) {
+            $this->friend->followUser(Auth::user()->friend_code, $friendCode);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フレンドを登録しました。');
