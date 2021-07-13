@@ -40,7 +40,7 @@ class Scenario extends Model
         'gm_memo',
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_friend_code', 'friend_code');
     }
@@ -59,7 +59,7 @@ class Scenario extends Model
         $query->where('scenarios.public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
         $query->where('scenarios.part_period_end', '>=', $today);
         $query->orderBy('scenarios.part_period_end', 'asc');
-        $lists = $query->with('users')->get();
+        $lists = $query->with('user')->get();
 
         return $lists;
     }
@@ -89,11 +89,10 @@ class Scenario extends Model
 
         $query->orderBy('scenarios.updated_at', 'desc');
 
-        $lists = $query->with('users')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
+        $lists = $query->with('user')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
 
         return $lists;
     }
-
 
 
     public function getManageList(array $data)
@@ -185,9 +184,7 @@ class Scenario extends Model
     public function updateScenario(array $data)
     {
         $scenario = $this::find($data['id']);
-        $scenario->fill($data);
-
-        $scenario->save();
+        $scenario->fill($data)->save();
     }
 
 

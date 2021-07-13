@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Consts\ScenarioConsts;
 use Illuminate\Http\Request;
 
+use App\Consts\ScenarioConsts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Scenario;
@@ -199,7 +199,7 @@ class ScenarioController extends Controller
      */
     private function checkFollowingHost(Scenario $detail)
     {
-        $count = $detail->users->followeds->where('friend_code', Auth::user()->friend_code)->count();
+        $count = $detail->user->followeds->where('friend_code', Auth::user()->friend_code)->count();
         if ($count === 1) {
             return true;
         } else {
@@ -216,7 +216,7 @@ class ScenarioController extends Controller
      */
     private function checkFollowedHost(Scenario $detail)
     {
-        $count = $detail->users->followings->where('friend_code', Auth::user()->friend_code)->count();
+        $count = $detail->user->followings->where('friend_code', Auth::user()->friend_code)->count();
         if ($count === 1) {
             return true;
         } else {

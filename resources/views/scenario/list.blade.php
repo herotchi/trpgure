@@ -79,7 +79,7 @@
                             <th scope="rol">
                                 <a href="{{ route('scenarios.detail', ['id' => $list->id]) }}">{{ $list->title }}</a>
                             </th>
-                            <td>{{ $list->users->user_name }}</td>
+                            <td>{{ $list->user->user_name }}</td>
                             <td>{{ $list->title }}</td>
                         </tr>
                         @endforeach

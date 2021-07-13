@@ -32,7 +32,7 @@ class Followed implements Rule
     {
         // 閲覧者がシナリオ主催者をフォローしているか確認
         $detail = $this->scenario->find($value);
-        $count = $detail->users->followeds->where('friend_code', Auth::user()->friend_code)->count();
+        $count = $detail->user->followeds->where('friend_code', Auth::user()->friend_code)->count();
 
         if ($count === 1) {
             return true;

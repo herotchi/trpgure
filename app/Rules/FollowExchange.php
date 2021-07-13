@@ -31,9 +31,9 @@ class FollowExchange implements Rule
     {
         $detail = $this->scenario->find($value);
         // 参加者がシナリオ主催者にフォローされているか確認
-        $followingCount = $detail->users->followings->where('friend_code', Auth::user()->friend_code)->count();
+        $followingCount = $detail->user->followings->where('friend_code', Auth::user()->friend_code)->count();
         // 参加者がシナリオ主催者をフォローしているか確認
-        $followedCount = $detail->users->followeds->where('friend_code', Auth::user()->friend_code)->count();
+        $followedCount = $detail->user->followeds->where('friend_code', Auth::user()->friend_code)->count();
 
         // お互いにフォローしていた場合、相互フォロー状態だと判断する
         if ($followingCount === 1 && $followedCount === 1) {

@@ -94,10 +94,6 @@
                     <h5 class="modal-title" id="deleteModalLabel">主催したシナリオを削除しますか？</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
-                {{-- 
-                <div class="modal-body">
-                    <p>あああ</p>
-                </div> --}}
                 <div class="modal-footer justify-content-center">
                     <button class="btn btn-danger w-50" type="submit">削除する</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
