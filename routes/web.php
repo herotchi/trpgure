@@ -7,6 +7,7 @@ use App\Http\Controllers\TopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\ScenarioController;
+use App\Http\Controllers\CharacterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/scenarios/list', [ScenarioController::class, 'list'])->name('scenarios.list');
     Route::get('/scenarios/detail/{id}', [ScenarioController::class, 'detail'])->name('scenarios.detail');
     Route::post('/scenarios/join', [ScenarioController::class, 'join'])->name('scenarios.join');
+    Route::get('/scenarios/manage', [ScenarioController::class, 'manage'])->name('scenarios.manage');
+    Route::get('/scenarios/manage_detail/{id}', [ScenarioController::class, 'manage_detail'])->name('scenarios.manage_detail');
     Route::get('/scenarios/add', [ScenarioController::class, 'add'])->name('scenarios.add');
     Route::post('/scenarios/insert', [ScenarioController::class, 'insert'])->name('scenarios.insert');
+    Route::get('/scenarios/edit/{id}', [ScenarioController::class, 'edit'])->name('scenarios.edit');
+    Route::post('/scenarios/update', [ScenarioController::class, 'update'])->name('scenarios.update');
+    Route::post('/scenarios/delete', [ScenarioController::class, 'delete'])->name('scenarios.delete');
+
+    Route::get('/characters/manage', [CharacterController::class, 'manage'])->name('characters.manage');
+    Route::get('/characters/manage_detail/{id}', [CharacterController::class, 'manage_detail'])->name('characters.manage_detail');
 });
