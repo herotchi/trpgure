@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\Character\ManageRequest;
+use App\Http\Requests\Character\EditRequest;
+use App\Http\Requests\Character\DeleteRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Character;
 
@@ -33,24 +35,67 @@ class CharacterController extends Controller
 
     public function manage_detail($id)
     {
-        var_dump(__LINE__);
-        /*
         $validator = Validator::make(
             ['id' => $id],
             ['id' => [
                 'bail',
                 'required',
                 'integer',
-                Rule::exists('scenarios', 'id')->where('user_friend_code', Auth::user()->friend_code),
+                Rule::exists('characters', 'id')->where('user_friend_code', Auth::user()->friend_code),
             ]]
         );
 
         if ($validator->fails()) {
-            return redirect()->route('scenarios.manage')->with('msg_failure', '不正な値が入力されました。');
+            return redirect()->route('characters.manage')->with('msg_failure', '不正な値が入力されました。');
         }
 
-        $detail = $this->scenario->find($id);
+        $detail = $this->character->find($id);
 
-        return view('scenario.manage_detail', compact('detail'));*/
+        return view('character.manage_detail', compact('detail'));
+    }
+
+
+    public function edit($id)
+    {
+        $validator = Validator::make(
+            ['id' => $id],
+            ['id' => [
+                'bail',
+                'required',
+                'integer',
+                Rule::exists('characters', 'id')->where('user_friend_code', Auth::user()->friend_code),
+            ]]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('characters.manage')->with('msg_failure', '不正な値が入力されました。');
+        }
+
+        $detail = $this->character->find($id);
+
+        return view('character.edit', compact('detail'));
+    }
+
+
+    public function update(EditRequest $request)
+    {
+        $inputs = $request->validated();
+        DB::transaction(function () use ($inputs) {
+            $this->character->updateCharacter($inputs);
+        });
+
+        return redirect()->route('characters.manage_detail', ['id' => $inputs['id']])->with('msg_success', 'キャラクターを編集しました。');
+    }
+
+
+    public function delete(DeleteRequest $request)
+    {
+        $inputs = $request->validated();
+
+        DB::transaction(function () use($inputs) {
+            $this->character->deleteCharacter($inputs['id']);
+        });
+
+        return redirect()->route('characters.manage')->with('msg_success', 'キャラクターを削除しました。');
     }
 }

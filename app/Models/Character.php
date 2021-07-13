@@ -21,6 +21,15 @@ class Character extends Model
         'character_sheet',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_friend_code', 'friend_code');
+    }
+
+    public function scenario()
+    {
+        return $this->belongsTo(Scenario::class);
+    }
 
     public function getManageList(array $data)
     {
@@ -38,5 +47,18 @@ class Character extends Model
         $lists = $query->paginate(CharacterConsts::PAGENATE_MANAGE_LIMIT);
 
         return $lists;
+    }
+
+
+    public function updateCharacter(array $data)
+    {
+        $character = $this::find($data['id']);
+        $character->fill($data)->save();
+    }
+
+
+    public function deleteCharacter($id)
+    {
+        $this->where('id', $id)->delete();
     }
 }

@@ -65,4 +65,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/characters/manage', [CharacterController::class, 'manage'])->name('characters.manage');
     Route::get('/characters/manage_detail/{id}', [CharacterController::class, 'manage_detail'])->name('characters.manage_detail');
+    Route::get('/characters/edit/{id}', [CharacterController::class, 'edit'])->name('characters.edit');
+    Route::post('/characters/update', [CharacterController::class, 'update'])->name('characters.update');
+    Route::post('/characters/delete', [CharacterController::class, 'delete'])->name('characters.delete');
 });
