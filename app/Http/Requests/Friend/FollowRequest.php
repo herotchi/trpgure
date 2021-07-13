@@ -10,7 +10,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\AlphaNumJp;
 use App\Rules\NotEqualFriendCode;
 
-class RemoveRequest extends FormRequest
+class FollowRequest extends FormRequest
 {
     protected $alphaNumJp;
     protected $notEqualFriendCode;
@@ -41,14 +41,14 @@ class RemoveRequest extends FormRequest
         return [
             //
             'friend_code' => [
-                'bail',
-                'required',
-                'string',
-                'size:' . UserConsts::FRIEND_CODE_LENGTH,
+                'bail', 
+                'required', 
+                'string', 
+                'size:' . UserConsts::FRIEND_CODE_LENGTH, 
                 $this->alphaNumJp,
                 'exists:users,friend_code',
                 $this->notEqualFriendCode,
-                Rule::exists('friends', 'followed_friend_code')->where('following_friend_code', Auth::user()->friend_code)
+                Rule::unique('friends', 'followed_friend_code')->where('following_friend_code', Auth::user()->friend_code)
             ]
         ];
     }

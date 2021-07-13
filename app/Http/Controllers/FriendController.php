@@ -8,29 +8,20 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Friend;
 use App\Http\Requests\Friend\AddRequest;
+use App\Http\Requests\Friend\FollowRequest;
 use App\Http\Requests\Friend\RemoveRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use App\Consts\UserConsts;
-use Illuminate\Validation\Rule;
-use App\Rules\AlphaNumJp;
-use App\Rules\NotEqualFriendCode;
 
 class FriendController extends Controller
 {
     //
     protected $friend;
     protected $user;
-    protected $alphaNumJp;
-    protected $notEqualFriendCode;
 
-
-    public function __construct(Friend $friend, User $user, AlphaNumJp $alphaNumJp, NotEqualFriendCode $notEqualFriendCode)
+    public function __construct(Friend $friend, User $user)
     {
         $this->friend = $friend;
         $this->user = $user;
-        $this->alphaNumJp = $alphaNumJp;
-        $this->notEqualFriendCode = $notEqualFriendCode;
     }
 
 
@@ -43,28 +34,12 @@ class FriendController extends Controller
     }
 
 
-    public function follow($friendCode)
+    public function follow(FollowRequest $request)
     {
-        $validator = Validator::make(
-            ['friend_code' => $friendCode], 
-            ['friend_code' => [
-                'bail', 
-                'required', 
-                'string', 
-                'size:' . UserConsts::FRIEND_CODE_LENGTH, 
-                $this->alphaNumJp,
-                'exists:users,friend_code',
-                $this->notEqualFriendCode,
-                Rule::unique('friends', 'followed_friend_code')->where('following_friend_code', Auth::user()->friend_code)
-            ]
-        ]);
+        $input = $request->validated();
 
-        if ($validator->fails()) {
-            return redirect()->route('friends.manage')->with('msg_failure', '不正な値が入力されました。');
-        }
-
-        DB::transaction(function () use($friendCode) {
-            $this->friend->followUser(Auth::user()->friend_code, $friendCode);
+        DB::transaction(function () use($input) {
+            $this->friend->followUser(Auth::user()->friend_code, $input['friend_code']);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フレンドを登録しました。');
@@ -73,8 +48,10 @@ class FriendController extends Controller
 
     public function remove(RemoveRequest $request)
     {
-        DB::transaction(function () use($request) {
-            $this->friend->removeFollow(Auth::user()->friend_code, $request->friend_code);
+        $inputs = $request->validated();
+
+        DB::transaction(function () use($inputs) {
+            $this->friend->removeFollow(Auth::user()->friend_code, $inputs['friend_code']);
         });
 
         return redirect()->route('friends.manage')->with('msg_success', 'フォローを解除しました。');
@@ -85,6 +62,7 @@ class FriendController extends Controller
     {
         return view('friend.add');
     }
+
 
     public function insert(AddRequest $request)
     {
