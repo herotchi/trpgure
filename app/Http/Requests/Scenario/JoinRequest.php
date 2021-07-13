@@ -55,8 +55,9 @@ class JoinRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $errors = $validator->errors();
-            if ($errors->has('scenario_id')) {
-                return redirect()->route('scenarios.list')->with('msg_failure', '不正な値が入力されました。');
+            if ($errors->any()) {
+                $this->redirectRoute = 'scenarios.list';
+                session()->flash('msg_failure', '不正な値が入力されました。');
             }
         });
     }
