@@ -44,4 +44,17 @@ class EditRequest extends FormRequest
             'public_flg' => ['bail', 'required', 'integer', Rule::in(array_keys(ScenarioConsts::PUBLIC_FLG_LIST))],
         ];
     }
+
+
+    // シナリオIDに入力エラーがあった場合は一覧画面にリダイレクトする
+    public function withValidator(\Illuminate\Validation\Validator $validator)
+    {
+        $validator->after(function ($validator) {
+            $errors = $validator->errors();
+            if ($errors->has('id')) {
+                $this->redirectRoute = 'scenarios.manage';
+                session()->flash('msg_failure', '不正な値が入力されました。');
+            }
+        });
+    }
 }
