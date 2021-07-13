@@ -55,6 +55,7 @@ class Scenario extends Model
         $today = new Datetime();
         $query = $this::query();
         $query->whereIn('user_friend_code', $friendCodes);
+        $query->where('user_friend_code', '<>', Auth::user()->friend_code);
         $query->where('scenarios.public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
         $query->where('scenarios.part_period_end', '>=', $today);
         $query->orderBy('scenarios.part_period_end', 'asc');
@@ -89,6 +90,38 @@ class Scenario extends Model
         $query->orderBy('scenarios.updated_at', 'desc');
 
         $lists = $query->with('users')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
+
+        return $lists;
+    }
+
+
+
+    public function getManageList(array $data)
+    {
+        $query = $this::query();
+
+        $query->when(Arr::exists($data, 'title') && $data['title'], function ($query) use ($data) {
+            return $query->where('title', 'like', "%{$data['title']}%");
+        });
+
+        $query->when(Arr::exists($data, 'genre') && $data['genre'], function ($query) use ($data) {
+            return $query->where('genre', $data['genre']);
+        });
+
+        $query->when(Arr::exists($data, 'platform') && $data['platform'], function ($query) use ($data) {
+            return $query->where('platform', $data['platform']);
+        });
+
+        $query->when(Arr::exists($data, 'public_flg') && $data['public_flg'], function ($query) use ($data) {
+            return $query->where('public_flg', $data['public_flg']);
+        });
+
+        // 自分が作成したシナリオのみを表示する
+        $query->where('user_friend_code', Auth::user()->friend_code);
+
+        $query->orderBy('updated_at', 'desc');
+
+        $lists = $query->paginate(ScenarioConsts::PAGENATE_MANAGE_LIMIT);
 
         return $lists;
     }
@@ -146,5 +179,20 @@ class Scenario extends Model
             'name' => $data['name'], 
             'character_sheet' => $data['character_sheet'], 
         ]);
+    }
+
+
+    public function updateScenario(array $data)
+    {
+        $scenario = $this::find($data['id']);
+        $scenario->fill($data);
+
+        $scenario->save();
+    }
+
+
+    public function deleteScenario($id)
+    {
+        $this->where('id', $id)->delete();
     }
 }

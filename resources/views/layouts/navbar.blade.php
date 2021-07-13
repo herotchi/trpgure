@@ -13,12 +13,12 @@
 						aria-expanded="false">シナリオ</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown-scenario">
 						<li><a class="dropdown-item" href="{{ route('scenarios.list') }}">一覧</a></li>
-						<li><a class="dropdown-item" href="#">管理</a></li>
+						<li><a class="dropdown-item" href="{{ route('scenarios.manage') }}">管理</a></li>
 						<li><a class="dropdown-item" href="{{ route('scenarios.add') }}">登録</a></li>
 					</ul>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">キャラクター</a>
+					<a class="nav-link" href="{{ route('characters.manage') }}">キャラクター</a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-friend" data-bs-toggle="dropdown"
