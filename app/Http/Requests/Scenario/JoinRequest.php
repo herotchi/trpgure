@@ -9,7 +9,6 @@ use App\Consts\CharacterConsts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Rules\FollowExchange;
-//use App\Rules\NotJoining;
 
 class JoinRequest extends FormRequest
 {
