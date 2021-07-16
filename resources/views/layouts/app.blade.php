@@ -31,7 +31,17 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('js/offcanvas.js') }}" defer></script>
-
+    <script>
+        function copyMyFriendCode(friendCode) {
+            navigator.clipboard.writeText(friendCode)
+            .then(function() {
+                //alert(friendCode);
+                toastr.success('コピーしました。');
+            }, function(err) {
+                toastr.error('コピーに失敗しました。');
+            });
+        }
+    </script>
     <!-- Add Scripts -->
     @stack('remove')
     @stack('modal_validation')
