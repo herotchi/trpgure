@@ -77,8 +77,10 @@
                 <a class="btn btn-primary w-50" href="{{ route('scenarios.edit', ['id' => $detail->id]) }}"
                     role="button">編集する</a>
                 <a class="btn btn-secondary" href="{{ route('scenarios.manage') }}" role="button">戻る</a>
+                @if (!$joinedFlg)
                 <button type="button" class="btn btn-outline-danger ms-sm-5" data-bs-toggle="modal"
                     data-bs-target="#deleteModal">削除する</button>
+                @endif
             </div>
         </div>
     </div>

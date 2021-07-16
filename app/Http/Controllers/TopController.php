@@ -23,11 +23,12 @@ class TopController extends Controller
         $this->user = $user;
     }
 
-    public function __invoke() {
-        $user = $this->user->find(Auth::user()->id);
-        $friendCodes = Arr::prepend(data_get($user->followeds->toArray(), '*.friend_code'), Auth::user()->friend_code);
-        $lists = $this->scenario->getTopList($friendCodes);
+    public function __invoke() 
+    {
+        // フォローしているフレンドが主催しているシナリオのみ取得する
+        $followingList = $this->user->getFollowingList();
+        $scenarios = $this->scenario->getTopList(data_get($followingList->toArray(), '*.friend_code'));
 
-        return view('top', compact('lists'));
+        return view('top', compact('scenarios'));
     }
 }

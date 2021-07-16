@@ -21,18 +21,18 @@
                             <label for="title" class="form-label">タイトル</label>
                             <input type="text" id="title"
                                 class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title"
-                                value="{{ old('title', $inputs['title']) }}" required autofocus>
+                                value="{{ old('title', $input['title']) }}" required autofocus>
                             <div class="invalid-feedback">{{ $errors->first('title') }}</div>
                         </div>
 
                         <div class="col-md-6">
-                            <label for="friend_code" class="form-label">シナリオ制作者</label>
+                            <label for="friend_code" class="form-label">シナリオ主催者</label>
                             <select id="friend_code"
                                 class="form-select{{ $errors->has('friend_code') ? ' is-invalid' : '' }}"
                                 name="friend_code">
                                 <option value="">---</option>
-                                @foreach($friendLists->followings as $following)
-                                <option value="{{ $following->friend_code }}" @if(old('friend_code', $inputs['friend_code'])==$following->friend_code) selected="selected"
+                                @foreach($followingList as $following)
+                                <option value="{{ $following->friend_code }}" @if(old('friend_code', $input['friend_code'])==$following->friend_code) selected="selected"
                                     @endif>{{ $following->user_name }}</option>
                                 @endforeach
                             </select>
@@ -45,7 +45,7 @@
                                 name="genre">
                                 <option value="">---</option>
                                 @foreach(ScenarioConsts::GENRE_LIST as $key => $value)
-                                <option value="{{ $key }}" @if(old('genre', $inputs['genre'])==$key) selected="selected" @endif>
+                                <option value="{{ $key }}" @if(old('genre', $input['genre'])==$key) selected="selected" @endif>
                                     {{ $value }}</option>
                                 @endforeach
                             </select>
@@ -62,30 +62,28 @@
         </div>
         <div class="card mt-4">
             <div class="card-header text-end">
-                {{ $lists->links('vendor.pagination.bootstrap-4_number') }}
+                {{ $scenarios->links('vendor.pagination.bootstrap-4_number') }}
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
-                            <th>シナリオ制作者</th>
-                            <th>ステータス</th>
+                            <th>シナリオ主催者</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($lists as $list)
+                        @foreach ($scenarios as $scenario)
                         <tr>
                             <th scope="rol">
-                                <a href="{{ route('scenarios.detail', ['id' => $list->id]) }}">{{ $list->title }}</a>
+                                <a href="{{ route('scenarios.detail', ['id' => $scenario->id]) }}">{{ $scenario->title }}</a>
                             </th>
-                            <td>{{ $list->user->user_name }}</td>
-                            <td>{{ $list->title }}</td>
+                            <td>{{ $scenario->user->user_name }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $lists->appends($inputs)->links() }}
+                {{ $scenarios->appends($input)->links() }}
             </div>
         </div>
     </div>

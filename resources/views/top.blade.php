@@ -16,30 +16,30 @@
             <div class="card-header">最近のシナリオ</div>
             <div class="card-body">
                 <div class="list-group">
-                    @foreach($lists as $list)
-                    <a href="{{ route('scenarios.detail', ['id' => $list->id]) }}" class="list-group-item list-group-item-action">
+                    @foreach($scenarios as $scenario)
+                    <a href="{{ route('scenarios.detail', ['id' => $scenario->id]) }}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{ $list->title }}</h5>
-                            <span>作：{{ $list->user->user_name }}</span>
+                            <h5 class="mb-1">{{ $scenario->title }}</h5>
+                            <span>作：{{ $scenario->user->user_name }}</span>
                         </div>
                         <p class="mb-1 ml-4 text-truncate">
-                            <span class="font-weight-bold">概要</span>：{{ $list->summary }}
+                            <span class="font-weight-bold">概要</span>：{{ $scenario->summary }}
                         </p>
                         <p class="mb-1 ml-4">
                             <span class="font-weight-bold">募集期間</span>：
-                            {{ $list->part_period_start ? $list->part_period_start->format('Y/m/d') : '' }}
-                            @if ($list->part_period_start || $list->part_period_end) ～ @endif
-                            @if ($list->part_period_end) 
-                            <span class="font-weight-bold">{{ $list->part_period_end->format('Y/m/d') }}</span>
+                            {{ $scenario->part_period_start ? $scenario->part_period_start->format('Y/m/d') : '' }}
+                            @if ($scenario->part_period_start || $scenario->part_period_end)～@endif
+                            @if ($scenario->part_period_end) 
+                            <span class="font-weight-bold">{{ $scenario->part_period_end->format('Y/m/d') }}</span>
                             @endif
                         </p>
                         <p class="mb-1 ml-4"><span class="font-weight-bold">推奨人数</span>：
-                            @if ($list->rec_number_min === $list->rec_number_max)
-                            {{ $list->rec_number_min }}人
+                            @if ($scenario->rec_number_min === $scenario->rec_number_max)
+                            {{ $scenario->rec_number_min }}人
                             @else
-                            {{ $list->rec_number_min }}人
+                            {{ $scenario->rec_number_min }}人
                             ～
-                            {{ $list->rec_number_max }}人
+                            {{ $scenario->rec_number_max }}人
                             @endif
                         </p>
                     </a>

@@ -21,7 +21,7 @@
                             <label for="title" class="form-label">タイトル</label>
                             <input type="text" id="title"
                                 class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" name="title"
-                                value="{{ old('title', $inputs['title']) }}" required autofocus>
+                                value="{{ old('title', $input['title']) }}" required autofocus>
                             <div class="invalid-feedback">{{ $errors->first('title') }}</div>
                         </div>
 
@@ -31,7 +31,7 @@
                                 name="genre">
                                 <option value="">---</option>
                                 @foreach(ScenarioConsts::GENRE_LIST as $key => $value)
-                                <option value="{{ $key }}" @if(old('genre', $inputs['genre'])==$key) selected="selected" @endif>
+                                <option value="{{ $key }}" @if(old('genre', $input['genre'])==$key) selected="selected" @endif>
                                     {{ $value }}</option>
                                 @endforeach
                             </select>
@@ -44,7 +44,7 @@
                                 name="platform">
                                 <option value="">---</option>
                                 @foreach(ScenarioConsts::PLATFORM_LIST as $key => $value)
-                                <option value="{{ $key }}" @if(old('platform', $inputs['platform'])==$key) selected="selected" @endif>
+                                <option value="{{ $key }}" @if(old('platform', $input['platform'])==$key) selected="selected" @endif>
                                     {{ $value }}</option>
                                 @endforeach
                             </select>
@@ -57,7 +57,7 @@
                                 name="public_flg">
                                 <option value="">---</option>
                                 @foreach(ScenarioConsts::PUBLIC_FLG_LIST as $key => $value)
-                                <option value="{{ $key }}" @if(old('public_flg', $inputs['public_flg'])==$key) selected="selected" @endif>
+                                <option value="{{ $key }}" @if(old('public_flg', $input['public_flg'])==$key) selected="selected" @endif>
                                     {{ $value }}</option>
                                 @endforeach
                             </select>
@@ -74,30 +74,28 @@
         </div>
         <div class="card mt-4">
             <div class="card-header text-end">
-                {{ $lists->links('vendor.pagination.bootstrap-4_number') }}
+                {{ $scenarios->links('vendor.pagination.bootstrap-4_number') }}
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
-                            <th>シナリオ制作者</th>
-                            <th>ステータス</th>
+                            <th>仮タイトル</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($lists as $list)
+                        @foreach ($scenarios as $scenario)
                         <tr>
                             <th scope="rol">
-                                <a href="{{ route('scenarios.manage_detail', ['id' => $list->id]) }}">{{ $list->title }}</a>
+                                <a href="{{ route('scenarios.manage_detail', ['id' => $scenario->id]) }}">{{ $scenario->title }}</a>
                             </th>
-                            <td>{{ $list->user->user_name }}</td>
-                            <td>{{ $list->title }}</td>
+                            <td>{{ $scenario->user->user_name }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $lists->appends($inputs)->links() }}
+                {{ $scenarios->appends($input)->links() }}
             </div>
         </div>
     </div>

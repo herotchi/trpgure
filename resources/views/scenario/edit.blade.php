@@ -24,6 +24,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
         <li class="breadcrumb-item"><a href="{{ route('scenarios.manage') }}">シナリオ管理</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage_detail', ['id' => $detail->id]) }}">シナリオ詳細</a></li>
         <li class="breadcrumb-item active" aria-current="page">シナリオ編集</li>
     </ol>
 </nav>
@@ -172,7 +173,7 @@
                         <div class="invalid-feedback">{{ $errors->first('public_flg') }}</div>
 
                         <div class="col-12 text-center mt-5">
-                            <button class="btn btn-primary w-50" type="submit">保存する</button>
+                            <button class="btn btn-primary w-50" type="submit">更新する</button>
                             <a class="btn btn-secondary" href="{{ route('scenarios.manage_detail', ['id' => $detail->id]) }}" role="button">戻る</a>
                         </div>
                     </div>

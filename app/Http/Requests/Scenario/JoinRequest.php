@@ -6,8 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use App\Consts\ScenarioConsts;
 use App\Consts\CharacterConsts;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Rules\FollowExchange;
+//use App\Rules\NotJoining;
 
 class JoinRequest extends FormRequest
 {
@@ -37,12 +39,16 @@ class JoinRequest extends FormRequest
     {
         return [
             //
-            'scenario_id' => [
+            'id' => [
                 'bail', 
                 'required', 
                 'integer', 
+                // 公開中のシナリオのみ
                 Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC),
-                $this->followExchange
+                // ユーザーとシナリオ主催者が相互フォロー状態
+                $this->followExchange,
+                // まだ参加していない
+                Rule::unique('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),
             ],
             'name' => 'bail|required|string|min:' . CharacterConsts::NAME_LENGTH_MIN . '|max:' . CharacterConsts::NAME_LENGTH_MAX,
             'character_sheet' => 'bail|nullable|string|min:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MIN . '|max:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MAX,
@@ -55,7 +61,7 @@ class JoinRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $errors = $validator->errors();
-            if ($errors->any()) {
+            if ($errors->has('id')) {
                 $this->redirectRoute = 'scenarios.list';
                 session()->flash('msg_failure', '不正な値が入力されました。');
             }

@@ -75,4 +75,12 @@ class ListRequest extends FormRequest
         return $data;
     }
 
+
+
+    public function attributes()
+    {
+        return [
+            'friend_code' => 'シナリオ主催者'
+        ];
+    }
 }

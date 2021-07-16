@@ -18,6 +18,7 @@ use App\Http\Requests\Scenario\ListRequest;
 use App\Http\Requests\Scenario\JoinRequest;
 use App\Http\Requests\Scenario\ManageRequest;
 use App\Http\Requests\Scenario\DeleteRequest;
+use App\Http\Requests\Scenario\CancelRequest;
 
 
 class ScenarioController extends Controller
@@ -38,11 +39,11 @@ class ScenarioController extends Controller
 
     public function list(ListRequest $request)
     {
-        $friendLists = $this->user->getFriendList();
-        $inputs = $request->validated();
-        $lists = $this->scenario->getList($inputs);
+        $followingList = $this->user->getFollowingList();
+        $input = $request->validated();
+        $scenarios = $this->scenario->getList(data_get($followingList->toArray(), '*.friend_code'), $input);
 
-        return view('scenario.list', compact(['friendLists', 'lists', 'inputs']));
+        return view('scenario.list', compact(['followingList', 'scenarios', 'input']));
     }
 
 
@@ -68,43 +69,33 @@ class ScenarioController extends Controller
 
         // 閲覧者がシナリオ主催者をフォローしているか確認する
         $followingFlg = $this->checkFollowingHost($detail);
-        if (!$followingFlg) {
-            return redirect()->route('scenarios.list')->with('msg_failure', '不正な値が入力されました。');
-        }
-
         // 閲覧者がシナリオ主催者にフォローされているか確認する
         $followedFlg = $this->checkFollowedHost($detail);
+        // 閲覧者がすでにシナリオに参加しているか確認する
+        $joiningFlg = $this->checkJoining($detail);
 
-        return view('scenario.detail', compact(['detail', 'followingFlg', 'followedFlg']));
+        return view('scenario.detail', compact(['detail', 'followingFlg', 'followedFlg', 'joiningFlg']));
     }
 
 
     public function join(JoinRequest $request)
     {
-        $inputs = $request->validated();
+        $input = $request->validated();
 
-        /*
-        $detail = $this->scenario->find($inputs['scenario_id']);
-        // 閲覧者とシナリオ主催者が相互フォロー状態じゃないとシナリオに参加できない
-        if (!$this->checkFollowingHost($detail) || !$this->checkFollowedHost($detail)) {
-            return redirect()->route('scenarios.list')->with('msg_failure', '不正な値が入力されました。');
-        }*/
-
-        DB::transaction(function () use ($inputs) {
-            $this->scenario->joinScenario($inputs);
+        DB::transaction(function () use ($input) {
+            $this->scenario->joinScenario($input);
         });
 
-        return redirect()->route('scenarios.detail', ['id' => $inputs['scenario_id']])->with('msg_success', 'シナリオに参加しました。');
+        return redirect()->route('scenarios.detail', ['id' => $input['id']])->with('msg_success', 'シナリオに参加しました。');
     }
 
 
     public function manage(ManageRequest $request)
     {
-        $friendLists = $this->user->getFriendList();
-        $inputs = $request->validated();
-        $lists = $this->scenario->getManageList($inputs);
+        $input = $request->validated();
+        $scenarios = $this->scenario->getManageList($input);
 
-        return view('scenario.manage', compact(['friendLists', 'lists', 'inputs']));
+        return view('scenario.manage', compact(['scenarios', 'input']));
     }
 
 
@@ -125,8 +116,9 @@ class ScenarioController extends Controller
         }
 
         $detail = $this->scenario->find($id);
+        $joinedFlg = $this->checkJoined($detail);
 
-        return view('scenario.manage_detail', compact('detail'));
+        return view('scenario.manage_detail', compact(['detail', 'joinedFlg']));
     }
 
 
@@ -170,24 +162,35 @@ class ScenarioController extends Controller
 
     public function update(EditRequest $request)
     {
-        $inputs = $request->validated();
-        DB::transaction(function () use ($inputs) {
-            $this->scenario->updateScenario($inputs);
+        $input = $request->validated();
+        DB::transaction(function () use ($input) {
+            $this->scenario->updateScenario($input);
         });
 
-        return redirect()->route('scenarios.manage_detail', ['id' => $inputs['id']])->with('msg_success', 'シナリオを編集しました。');
+        return redirect()->route('scenarios.manage_detail', ['id' => $input['id']])->with('msg_success', 'シナリオを編集しました。');
     }
 
 
     public function delete(DeleteRequest $request)
     {
-        $inputs = $request->validated();
+        $input = $request->validated();
 
-        DB::transaction(function () use($inputs) {
-            $this->scenario->deleteScenario($inputs['id']);
+        DB::transaction(function () use($input) {
+            $this->scenario->deleteScenario($input['id']);
         });
 
         return redirect()->route('scenarios.manage')->with('msg_success', 'シナリオを削除しました。');
+    }
+
+
+    public function cancel(CancelRequest $request)
+    {
+        $input = $request->validated();
+        DB::transaction(function () use($input) {
+            $this->scenario->cancelScenario($input['id']);
+        });
+
+        return redirect()->route('scenarios.list')->with('msg_success', 'シナリオの参加を取り消しました。');
     }
 
 
@@ -225,4 +228,36 @@ class ScenarioController extends Controller
     }
 
 
+    /**
+     * 閲覧者がシナリオに参加しているか確認する
+     *
+     * @param Scenario $detail
+     * @return boolean
+     */
+    private function checkJoining(Scenario $detail)
+    {
+        $count = $detail->characters->where('user_friend_code', Auth::user()->friend_code)->count();
+        if ($count === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * 主催したシナリオに参加者がいるか確認
+     *
+     * @param Scenario $detail
+     * @return boolean
+     */
+    private function checkJoined(Scenario $detail)
+    {
+        $count = $detail->characters->count();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

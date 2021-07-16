@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ登録')
+@section('title', 'シナリオ主催')
 
 @push('datepicker')
     <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
@@ -23,13 +23,13 @@
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ登録</li>
+        <li class="breadcrumb-item active" aria-current="page">シナリオ主催</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ登録</div>
+            <div class="card-header">シナリオ主催</div>
             <div class="card-body">
                 <form action="{{ route('scenarios.insert') }}" method="post" novalidate>
                     @csrf
@@ -170,7 +170,7 @@
                         <div class="invalid-feedback">{{ $errors->first('public_flg') }}</div>
 
                         <div class="col-12 text-center mt-5">
-                            <button class="btn btn-primary w-50" type="submit">シナリオ登録</button>
+                            <button class="btn btn-primary w-50" type="submit">保存</button>
                             <a class="btn btn-secondary" href="{{ route('top') }}" role="button">戻る</a>
                         </div>
                     </div>

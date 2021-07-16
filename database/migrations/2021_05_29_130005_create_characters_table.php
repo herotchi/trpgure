@@ -23,6 +23,7 @@ class CreateCharactersTable extends Migration
             $table->datetimeTz('updated_at');
 
             $table->foreign('user_friend_code')->references('friend_code')->on('users');
+            $table->unique(['user_friend_code', 'scenario_id'], 'unique_user_friend_code_scenario_id');
         });
     }
 

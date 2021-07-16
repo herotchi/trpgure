@@ -50,7 +50,14 @@ class Scenario extends Model
         return $this->hasMany(Character::class);
     }
 
-    public function getTopList($friendCodes)
+
+    /**
+     * トップ画面に表示する最近の自分主催以外のフレンドが主催したシナリオ一覧を取得する
+     *
+     * @param array $friendCodes フォローしているフレンドのコード一覧
+     * @return object $list
+     */
+    public function getTopList(array $friendCodes)
     {
         $today = new Datetime();
         $query = $this::query();
@@ -59,39 +66,40 @@ class Scenario extends Model
         $query->where('scenarios.public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
         $query->where('scenarios.part_period_end', '>=', $today);
         $query->orderBy('scenarios.part_period_end', 'asc');
-        $lists = $query->with('user')->get();
+        $list = $query->with('user')->get();
 
-        return $lists;
+        return $list;
     }
 
 
-    public function getList(array $data)
+    /**
+     * フォローしているフレンドが主催しているシナリオのみ取得する
+     *
+     * @param array $friendCodes フォローしているフレンドのコード一覧
+     * @param array $data
+     * @return object $list
+     */
+    public function getList(array $friendCodes ,array $data)
     {
         $query = $this::query();
-
+        $query->whereIn('user_friend_code', $friendCodes);
         $query->when(Arr::exists($data, 'title') && $data['title'], function ($query) use ($data) {
             return $query->where('scenarios.title', 'like', "%{$data['title']}%");
         });
-
         $query->when(Arr::exists($data, 'friend_code') && $data['friend_code'], function ($query) use ($data) {
             return $query->where('scenarios.user_friend_code', $data['friend_code']);
         });
-
         $query->when(Arr::exists($data, 'genre') && $data['genre'], function ($query) use ($data) {
             return $query->where('scenarios.genre', $data['genre']);
         });
-
         // 他人が作成したシナリオのみを表示する
         $query->where('scenarios.user_friend_code', '<>', Auth::user()->friend_code);
-
         // シナリオ一覧では公開中のシナリオのみ表示する
         $query->where('scenarios.public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC);
-
         $query->orderBy('scenarios.updated_at', 'desc');
+        $list = $query->with('user')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
 
-        $lists = $query->with('user')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
-
-        return $lists;
+        return $list;
     }
 
 
@@ -170,14 +178,28 @@ class Scenario extends Model
     }
 
 
+    /**
+     * シナリオ参加処理
+     *
+     * @param array $data
+     * @return void
+     */
     public function joinScenario(array $data)
     {
-        $scenario = $this::find($data['scenario_id']);
+        $scenario = $this::find($data['id']);
         $scenario->characters()->create([
             'user_friend_code' => Auth::user()->friend_code,
             'name' => $data['name'], 
             'character_sheet' => $data['character_sheet'], 
         ]);
+    }
+
+
+
+    public function cancelScenario($id)
+    {
+        $scenario = $this::find($id);
+        $scenario->characters()->where('scenario_id', $id)->where('user_friend_code', Auth::user()->friend_code)->delete();
     }
 
 

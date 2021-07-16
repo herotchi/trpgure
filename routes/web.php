@@ -62,6 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/scenarios/edit/{id}', [ScenarioController::class, 'edit'])->name('scenarios.edit');
     Route::post('/scenarios/update', [ScenarioController::class, 'update'])->name('scenarios.update');
     Route::post('/scenarios/delete', [ScenarioController::class, 'delete'])->name('scenarios.delete');
+    Route::post('/scenarios/cancel', [ScenarioController::class, 'cancel'])->name('scenarios.cancel');
 
     Route::get('/characters/manage', [CharacterController::class, 'manage'])->name('characters.manage');
     Route::get('/characters/manage_detail/{id}', [CharacterController::class, 'manage_detail'])->name('characters.manage_detail');
