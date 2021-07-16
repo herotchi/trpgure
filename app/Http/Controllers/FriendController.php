@@ -54,6 +54,8 @@ class FriendController extends Controller
                 $this->alphaNumJp,
                 'exists:users,friend_code',
                 $this->notEqualFriendCode,
+                // フォロー対象にフォローされているか確認
+                Rule::exists('friends', 'following_friend_code')->where('followed_friend_code', Auth::user()->friend_code),
                 Rule::unique('friends', 'followed_friend_code')->where('following_friend_code', Auth::user()->friend_code)
             ]]
         );

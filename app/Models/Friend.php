@@ -13,18 +13,12 @@ class Friend extends Model
     const CREATED_AT = 'followed_at';
     const UPDATED_AT = null;
 
-
     protected $table = 'friends';
 
     // プライマリキー設定
     protected $primaryKey = ['following_friend_code', 'followed_friend_code'];
     // increment無効化
     public $incrementing = false;
-
-    public function getFriendList()
-    {
-
-    }
 
 
     /**
