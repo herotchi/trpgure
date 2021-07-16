@@ -17,6 +17,7 @@ class Character extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'user_friend_code',
         'name',
         'character_sheet',
     ];
@@ -53,6 +54,7 @@ class Character extends Model
     public function updateCharacter(array $data)
     {
         $character = $this::find($data['id']);
+        $character->fillable(['name', 'character_sheet']);
         $character->fill($data)->save();
     }
 

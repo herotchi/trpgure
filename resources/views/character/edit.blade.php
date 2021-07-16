@@ -8,6 +8,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
         <li class="breadcrumb-item"><a href="{{ route('characters.manage') }}">キャラクター管理</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('characters.manage_detail', ['id' => $detail->id]) }}">キャラクター詳細</a></li>
         <li class="breadcrumb-item active" aria-current="page">キャラクター編集</li>
     </ol>
 </nav>
@@ -41,7 +42,7 @@
                         </div>
 
                         <div class="col-12 text-center mt-5">
-                            <button class="btn btn-primary w-50" type="submit">保存する</button>
+                            <button class="btn btn-primary w-50" type="submit">更新する</button>
                             <a class="btn btn-secondary" href="{{ route('characters.manage_detail', ['id' => $detail->id]) }}" role="button">戻る</a>
                         </div>
                     </div>

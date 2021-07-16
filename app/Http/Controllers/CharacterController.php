@@ -26,10 +26,10 @@ class CharacterController extends Controller
 
     public function manage(ManageRequest $request)
     {
-        $inputs = $request->validated();
-        $lists = $this->character->getManageList($inputs);
+        $input = $request->validated();
+        $characters = $this->character->getManageList($input);
 
-        return view('character.manage', compact(['lists', 'inputs']));
+        return view('character.manage', compact(['characters', 'input']));
     }
 
 
@@ -79,21 +79,21 @@ class CharacterController extends Controller
 
     public function update(EditRequest $request)
     {
-        $inputs = $request->validated();
-        DB::transaction(function () use ($inputs) {
-            $this->character->updateCharacter($inputs);
+        $input = $request->validated();
+        DB::transaction(function () use ($input) {
+            $this->character->updateCharacter($input);
         });
 
-        return redirect()->route('characters.manage_detail', ['id' => $inputs['id']])->with('msg_success', 'キャラクターを編集しました。');
+        return redirect()->route('characters.manage_detail', ['id' => $input['id']])->with('msg_success', 'キャラクターを編集しました。');
     }
 
 
     public function delete(DeleteRequest $request)
     {
-        $inputs = $request->validated();
+        $input = $request->validated();
 
-        DB::transaction(function () use($inputs) {
-            $this->character->deleteCharacter($inputs['id']);
+        DB::transaction(function () use($input) {
+            $this->character->deleteCharacter($input['id']);
         });
 
         return redirect()->route('characters.manage')->with('msg_success', 'キャラクターを削除しました。');

@@ -21,7 +21,7 @@
                             <label for="name" class="form-label">キャラクター名</label>
                             <input type="text" id="name"
                                 class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                value="{{ old('name', $inputs['name']) }}" required autofocus>
+                                value="{{ old('name', $input['name']) }}" required autofocus>
                             <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                         </div>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="card mt-4">
             <div class="card-header text-end">
-                {{ $lists->links('vendor.pagination.bootstrap-4_number') }}
+                {{ $characters->links('vendor.pagination.bootstrap-4_number') }}
             </div>
             <div class="card-body">
                 <table class="table">
@@ -45,16 +45,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($lists as $list)
+                        @foreach ($characters as $character)
                         <tr>
                             <th scope="rol">
-                                <a href="{{ route('characters.manage_detail', ['id' => $list->id]) }}">{{ $list->name }}</a>
+                                <a href="{{ route('characters.manage_detail', ['id' => $character->id]) }}">{{ $character->name }}</a>
                             </th>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $lists->appends($inputs)->links() }}
+                {{ $characters->appends($input)->links() }}
             </div>
         </div>
     </div>
