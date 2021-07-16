@@ -60,16 +60,18 @@ class User extends Authenticatable
         return $this->belongsToMany(self::class, 'friends', 'followed_friend_code', 'following_friend_code', 'friend_code', 'friend_code')->withPivot(['followed_at', 'users.id'])->orderBy('pivot_followed_at', 'desc')->orderBy('users.id', 'desc');
     }
 
-    public function getFriendList()
+
+    /**
+     * フォローしているフレンドを取得する
+     *
+     * @return object $followingList
+     */
+    public function getFollowingList()
     {
-        /*
-        $query = $this::query();
-        $query->where('following_friend_code', $followingFriendCode);
-        $query->orderBy('followed_at', 'desc');
-        $lists = $query->get();
-*/
-        $lists = $this->find(Auth::user()->id);
-        return $lists;
+        $user = $this->find(Auth::user()->id);
+        $followingList = $user->followings;
+
+        return $followingList;
     }
 
 

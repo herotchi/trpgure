@@ -30,7 +30,7 @@
                             <div class="invalid-feedback">{{ $errors->first('user_name') }}</div>
                         </div>
                         <div class="col-12 text-center">
-                            <button class="btn btn-primary w-25" type="submit">保存</button>
+                            <button class="btn btn-primary w-50" type="submit">更新する</button>
                             <a class="btn btn-secondary" href="{{ route('top') }}" role="button">戻る</a>
                         </div>
                     </div>
