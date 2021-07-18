@@ -75,7 +75,7 @@
                 <h2 class="modal-title" id="user_policy_modal">利用規約</h2>
             </div>
             <div class="modal-body">
-                @include('layouts.user_policy')
+                @include('layouts.terms_of_use_block')
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"

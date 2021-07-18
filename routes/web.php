@@ -30,6 +30,9 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 });*/
 
+Route::get('/terms_of_use', [TopController::class, 'terms_of_use'])->name('terms_of_use');
+Route::get('/privacy_policy', [TopController::class, 'privacy_policy'])->name('privacy_policy');
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('show_login');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -38,7 +41,9 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', TopController::class)->name('top');
+    Route::get('/', [TopController::class, 'top'])->name('top');
+    //Route::get('/terms_of_use', [TopController::class, 'terms_of_use'])->name('terms_of_use');
+    //Route::get('/privacy_policy', [TopController::class, 'privacy_policy'])->name('privacy_policy');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/users/edit', [UserController::class, 'edit'])->name('users.edit');

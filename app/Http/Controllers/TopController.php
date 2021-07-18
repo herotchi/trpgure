@@ -23,12 +23,24 @@ class TopController extends Controller
         $this->user = $user;
     }
 
-    public function __invoke() 
+    public function top() 
     {
         // フォローしているフレンドが主催しているシナリオのみ取得する
         $followingList = $this->user->getFollowingList();
         $scenarios = $this->scenario->getTopList(data_get($followingList->toArray(), '*.friend_code'));
 
         return view('top', compact('scenarios'));
+    }
+
+
+    public function terms_of_use()
+    {
+        return view('terms_of_use');
+    }
+
+
+    public function privacy_policy()
+    {
+        return view('privacy_policy');
     }
 }
