@@ -57,6 +57,7 @@ class ScenarioController extends Controller
                 'integer',
                 Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC),
                 Rule::unique('scenarios', 'id')->where('user_friend_code', Auth::user()->friend_code),
+                // 閲覧者がシナリオ主催者をフォローしているか確認
                 $this->followed
             ]]
         );
