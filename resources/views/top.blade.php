@@ -20,7 +20,7 @@
                     <a href="{{ route('scenarios.detail', ['id' => $scenario->id]) }}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">{{ $scenario->title }}</h5>
-                            <span>作：{{ $scenario->user->user_name }}</span>
+                            <span>主催：{{ $scenario->user->user_name }}</span>
                         </div>
                         <p class="mb-1 ml-4 text-truncate">
                             <span class="font-weight-bold">概要</span>：{{ $scenario->summary }}
