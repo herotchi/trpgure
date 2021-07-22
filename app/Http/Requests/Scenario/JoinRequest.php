@@ -9,6 +9,7 @@ use App\Consts\CharacterConsts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use App\Rules\FollowExchange;
+use DateTime;
 
 class JoinRequest extends FormRequest
 {
@@ -36,14 +37,19 @@ class JoinRequest extends FormRequest
      */
     public function rules()
     {
+        //$today = new Datetime();
+
         return [
             //
             'id' => [
-                'bail', 
-                'required', 
-                'integer', 
-                // 公開中のシナリオのみ
-                Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC),
+                'bail',
+                'required',
+                'integer',
+                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のシナリオのみ
+                Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC)->where(function ($query) {
+                    $today = new Datetime();
+                    return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
+                }),
                 // ユーザーとシナリオ主催者が相互フォロー状態
                 $this->followExchange,
                 // まだ参加していない
@@ -59,7 +65,7 @@ class JoinRequest extends FormRequest
     public function withValidator(\Illuminate\Validation\Validator $validator)
     {
         $validator->after(function ($validator) {
-            $errors = $validator->errors();
+            $errors = $validator->errors();var_dump($errors);exit();
             if ($errors->has('id')) {
                 $this->redirectRoute = 'scenarios.list';
                 session()->flash('msg_failure', '不正な値が入力されました。');

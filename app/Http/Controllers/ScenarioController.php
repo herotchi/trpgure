@@ -19,6 +19,7 @@ use App\Http\Requests\Scenario\JoinRequest;
 use App\Http\Requests\Scenario\ManageRequest;
 use App\Http\Requests\Scenario\DeleteRequest;
 use App\Http\Requests\Scenario\CancelRequest;
+use DateTime;
 
 
 class ScenarioController extends Controller
@@ -49,13 +50,18 @@ class ScenarioController extends Controller
 
     public function detail($id)
     {
+
         $validator = Validator::make(
             ['id' => $id],
             ['id' => [
                 'bail',
                 'required',
                 'integer',
-                Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC),
+                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のシナリオのみ
+                Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC)->where(function ($query) {
+                    $today = new Datetime();
+                    return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
+                }),
                 Rule::unique('scenarios', 'id')->where('user_friend_code', Auth::user()->friend_code),
                 // 閲覧者がシナリオ主催者をフォローしているか確認
                 $this->followed

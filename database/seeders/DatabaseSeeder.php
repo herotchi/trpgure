@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call(FriendSeeder::class);
         $this->call(ScenarioSeeder::class);
         $this->call(CharacterSeeder::class);
-        $this->call(JoinHistorySeeder::class);
     }
 }

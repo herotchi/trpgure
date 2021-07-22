@@ -27,11 +27,7 @@
                         </p>
                         <p class="mb-1 ml-4">
                             <span class="font-weight-bold">募集期間</span>：
-                            {{ $scenario->part_period_start ? $scenario->part_period_start->format('Y/m/d') : '' }}
-                            @if ($scenario->part_period_start || $scenario->part_period_end)～@endif
-                            @if ($scenario->part_period_end) 
-                            <span class="font-weight-bold">{{ $scenario->part_period_end->format('Y/m/d') }}</span>
-                            @endif
+                            {{ $scenario->part_period_start->format('Y/m/d') }}～{{ $scenario->part_period_end->format('Y/m/d') }}
                         </p>
                         <p class="mb-1 ml-4"><span class="font-weight-bold">推奨人数</span>：
                             @if ($scenario->rec_number_min === $scenario->rec_number_max)

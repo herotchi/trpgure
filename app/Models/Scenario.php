@@ -63,9 +63,12 @@ class Scenario extends Model
         $query = $this::query();
         $query->whereIn('user_friend_code', $friendCodes);
         $query->where('user_friend_code', '<>', Auth::user()->friend_code);
-        $query->where('scenarios.public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
-        $query->where('scenarios.part_period_end', '>=', $today);
-        $query->orderBy('scenarios.part_period_end', 'asc');
+        $query->where('public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
+        // 募集開始日が現在と同じか過去のシナリオのみ
+        $query->where('part_period_start', '<=', $today->format('Y-m-d'));
+        // 募集終了日が現在と同じか未来のシナリオのみ
+        $query->where('part_period_end', '>=', $today->format('Y-m-d'));
+        $query->orderBy('part_period_end', 'asc');
         $list = $query->with('user')->get();
 
         return $list;
@@ -81,6 +84,7 @@ class Scenario extends Model
      */
     public function getList(array $friendCodes ,array $data)
     {
+        $today = new Datetime();
         $query = $this::query();
         $query->whereIn('user_friend_code', $friendCodes);
         $query->when(Arr::exists($data, 'title') && $data['title'], function ($query) use ($data) {
@@ -96,6 +100,10 @@ class Scenario extends Model
         $query->where('scenarios.user_friend_code', '<>', Auth::user()->friend_code);
         // シナリオ一覧では公開中のシナリオのみ表示する
         $query->where('scenarios.public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC);
+        // 募集開始日が現在と同じか過去のシナリオのみ
+        $query->where('part_period_start', '<=', $today->format('Y-m-d'));
+        // 募集終了日が現在と同じか未来のシナリオのみ
+        $query->where('part_period_end', '>=', $today->format('Y-m-d'));
         $query->orderBy('scenarios.updated_at', 'desc');
         $list = $query->with('user')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
 
@@ -132,41 +140,6 @@ class Scenario extends Model
 
         return $lists;
     }
-
-
-/*
-    public function getList(array $data)
-    {
-        $query = $this::query();
-        $query->join('users','scenarios.user_friend_code','=','users.friend_code');
-
-        $query->when(Arr::exists($data, 'title') && $data['title'], function ($query) use ($data) {
-            return $query->where('scenarios.title', 'like', "%{$data['title']}%");
-        });
-
-        $query->when(Arr::exists($data, 'friend_code') && $data['friend_code'], function ($query) use ($data) {
-            return $query->where('scenarios.user_friend_code', $data['friend_code']);
-        });
-
-        $query->when(Arr::exists($data, 'genre') && $data['genre'], function ($query) use ($data) {
-            return $query->where('scenarios.genre', $data['genre']);
-        });
-
-        // 他人が作成したシナリオのみを表示する
-        $query->where('scenarios.user_friend_code', '<>', Auth::user()->friend_code);
-
-        // シナリオ一覧では公開中のシナリオのみ表示する
-        $query->where('scenarios.public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC);
-
-        $query->orderBy('scenarios.updated_at', 'desc');
-        
-        $lists = $query->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT, [
-            'scenarios.id as id', 
-            'scenarios.title as title', 
-        ]);
-
-        return $lists;
-    }*/
 
 
     public function insertScenario(array $data)

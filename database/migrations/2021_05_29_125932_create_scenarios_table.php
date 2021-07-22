@@ -19,8 +19,8 @@ class CreateScenariosTable extends Migration
             $table->char('user_friend_code', 12);                       // フレンドコード
             $table->string('title', 100);								// タイトル
             $table->text('summary')->nullable();						// 概要
-            $table->date('part_period_start')->nullable();				// 参加募集開始日時
-            $table->date('part_period_end')->nullable();				// 参加募集終了日時
+            $table->date('part_period_start');				            // 参加募集開始日時
+            $table->date('part_period_end');				            // 参加募集終了日時
             $table->text('possible_date')->nullable();				    // 実施候補日
             $table->tinyInteger('genre')->unsigned();					// ジャンル
             $table->tinyInteger('platform')->unsigned();				// プラットフォーム

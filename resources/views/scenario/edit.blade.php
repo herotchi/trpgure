@@ -118,7 +118,9 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="part_period_start" class="form-label">参加募集開始日</label>
+                            <label for="part_period_start" class="form-label">参加募集開始日
+                                <span class="text-danger font-weight-bold">※</span>
+                            </label>
                             <input type="text" id="part_period_start"
                                 class="datepicker form-control{{ $errors->has('part_period_start') ? ' is-invalid' : '' }}"
                                 name="part_period_start" value="{{ old('part_period_start', $detail->part_period_start ? $detail->part_period_start->format('Y/m/d') : '') }}">
@@ -126,7 +128,9 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="part_period_end" class="form-label">参加募集終了日</label>
+                            <label for="part_period_end" class="form-label">参加募集終了日
+                                <span class="text-danger font-weight-bold">※</span>
+                            </label>
                             <input type="text" id="part_period_end"
                                 class="datepicker form-control{{ $errors->has('part_period_end') ? ' is-invalid' : '' }}"
                                 name="part_period_end" value="{{ old('part_period_end', $detail->part_period_end ? $detail->part_period_end->format('Y/m/d') : '') }}">

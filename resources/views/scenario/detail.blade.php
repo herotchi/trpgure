@@ -59,15 +59,7 @@ $(document).ready(function() {
                 <li class="list-group-item">
                     <h5>参加募集期間</h5>
                     <span>
-                        @if ($detail->part_period_start)
-                        {{ $detail->part_period_start->format('Y/m/d') }}
-                        @endif
-                        @if ($detail->part_period_start || $detail->part_period_end)
-                        ～
-                        @endif
-                        @if ($detail->part_period_end)
-                        {{ $detail->part_period_end->format('Y/m/d') }}
-                        @endif
+                        {{ $detail->part_period_start->format('Y/m/d') }}～{{ $detail->part_period_end->format('Y/m/d') }}
                     </span>
                 </li>
                 <li class="list-group-item">
