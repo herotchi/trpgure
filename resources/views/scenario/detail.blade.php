@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ詳細')
+@section('title', 'セッション詳細')
 
 @push('datepicker')
 <script type="text/javascript" defer>
@@ -17,17 +17,17 @@ $(document).ready(function() {
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('scenarios.list') }}">シナリオ一覧</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ詳細</li>
+        <li class="breadcrumb-item"><a href="{{ route('scenarios.list') }}">セッション一覧</a></li>
+        <li class="breadcrumb-item active" aria-current="page">セッション詳細</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ詳細</div>
+            <div class="card-header">セッション詳細</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <h5>シナリオ主催者</h5>
+                    <h5>セッション募集者</h5>
                     <span>{{ $detail->user->user_name }}</span>
                 </li>
                 <li class="list-group-item">
@@ -39,7 +39,7 @@ $(document).ready(function() {
                     <span>{!! nl2br(e($detail->summary)) !!}</span>
                 </li>
                 <li class="list-group-item">
-                    <h5>ジャンル</h5>
+                    <h5>システム</h5>
                     <span>{{ ScenarioConsts::GENRE_LIST[$detail->genre] }}</span>
                 </li>
                 <li class="list-group-item">
@@ -73,8 +73,6 @@ $(document).ready(function() {
             </ul>
             <div class="col-12 text-center my-4">
                 @if ($followingFlg && $followedFlg && $joiningFlg)
-                {{-- 
-                <button class="btn btn-outline-primary w-50" type="button" disabled>参加中</button> --}}
                 <button class="btn btn-outline-danger w-50" type="button" data-bs-toggle="modal"
                     data-bs-target="#cancelModal">参加を取り消す</button>
                 @elseif ($followingFlg && $followedFlg && !$joiningFlg)
@@ -94,7 +92,7 @@ $(document).ready(function() {
                 @csrf
                 <input type="hidden" name="id" value="{{ $detail->id }}">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="joinModalLabel">シナリオ参加</h5>
+                    <h5 class="modal-title" id="joinModalLabel">セッション参加</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
@@ -136,7 +134,7 @@ $(document).ready(function() {
                 @csrf
                 <input type="hidden" name="id" value="{{ $detail->id }}">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cancelModalLabel">シナリオ参加取り消し</h5>
+                    <h5 class="modal-title" id="cancelModalLabel">セッション参加取り消し</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">

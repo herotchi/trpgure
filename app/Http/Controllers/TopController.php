@@ -25,7 +25,7 @@ class TopController extends Controller
 
     public function top() 
     {
-        // フォローしているフレンドが主催しているシナリオのみ取得する
+        // フォローしているフレンドが募集するセッションのみ取得する
         $followingList = $this->user->getFollowingList();
         $scenarios = $this->scenario->getTopList(data_get($followingList->toArray(), '*.friend_code'));
 

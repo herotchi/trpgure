@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ編集')
+@section('title', 'セッション編集')
 
 @push('datepicker')
     <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
@@ -23,15 +23,15 @@
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage') }}">シナリオ管理</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage_detail', ['id' => $detail->id]) }}">シナリオ詳細</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ編集</li>
+        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage') }}">セッション管理</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage_detail', ['id' => $detail->id]) }}">セッション詳細</a></li>
+        <li class="breadcrumb-item active" aria-current="page">セッション編集</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ編集</div>
+            <div class="card-header">セッション編集</div>
             <div class="card-body">
                 <form action="{{ route('scenarios.update') }}" method="post" novalidate>
                     @csrf
@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="genre" class="form-label">ジャンル
+                            <label for="genre" class="form-label">システム
                                 <span class="text-danger font-weight-bold">※</span>
                             </label>
                             <select id="genre" class="form-select{{ $errors->has('genre') ? ' is-invalid' : '' }}"
@@ -186,5 +186,4 @@
         </div>
     </div>
 </div>
-
 @endsection

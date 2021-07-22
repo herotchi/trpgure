@@ -17,7 +17,7 @@
             <div class="card-header">キャラクター詳細</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <h5>参加シナリオ</h5>
+                    <h5>参加セッション</h5>
                     <span>{{ $detail->scenario->title }}</span>
                 </li>
                 <li class="list-group-item">
@@ -51,7 +51,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
-                    <p><u class="text-danger">※キャラクターを削除するとシナリオの参加も取り消されます。</u></p>
+                    <p><u class="text-danger">※キャラクターを削除するとセッションの参加も取り消されます。</u></p>
                 </div>
                 <div class="modal-footer justify-content-center">
                     <button class="btn btn-danger w-50" type="submit">削除する</button>

@@ -33,7 +33,7 @@ class DeleteRequest extends FormRequest
                 'required', 
                 'integer', 
                 Rule::exists('scenarios')->where('user_friend_code', Auth::user()->friend_code),
-                // シナリオに参加者がいる場合、シナリオを削除できない
+                // セッションに参加者がいる場合、セッションを削除できない
                 Rule::unique('characters', 'scenario_id'),
             ],
         ];

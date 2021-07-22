@@ -30,7 +30,7 @@ class Followed implements Rule
      */
     public function passes($attribute, $value)
     {
-        // 閲覧者がシナリオ主催者をフォローしているか確認
+        // 閲覧者がセッション募集者をフォローしているか確認
         $detail = $this->scenario->find($value);
         $count = $detail->user->followeds->where('friend_code', Auth::user()->friend_code)->count();
 
@@ -48,6 +48,6 @@ class Followed implements Rule
      */
     public function message()
     {
-        return 'フォローしていないユーザーが主催するシナリオを閲覧することはできません。';
+        return 'フォローしていないユーザーが募集するセッションを閲覧することはできません。';
     }
 }

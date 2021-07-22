@@ -10,11 +10,11 @@
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown-scenario" data-bs-toggle="dropdown"
-						aria-expanded="false">シナリオ</a>
+						aria-expanded="false">セッション</a>
 					<ul class="dropdown-menu" aria-labelledby="dropdown-scenario">
 						<li><a class="dropdown-item" href="{{ route('scenarios.list') }}">一覧</a></li>
 						<li><a class="dropdown-item" href="{{ route('scenarios.manage') }}">管理</a></li>
-						<li><a class="dropdown-item" href="{{ route('scenarios.add') }}">主催</a></li>
+						<li><a class="dropdown-item" href="{{ route('scenarios.add') }}">募集</a></li>
 					</ul>
 				</li>
 				<li class="nav-item">
@@ -40,7 +40,7 @@
 			</ul>
 			<form class="d-flex mb-3 mb-lg-0 me-lg-4 me-0" action="{{ route('scenarios.list') }}" method="GET">
 				<div class="input-group">
-					<input class="form-control" type="search" name="title" placeholder="シナリオを検索する" aria-describedby="navi-scenario-search">
+					<input class="form-control" type="search" name="title" placeholder="セッションを検索する" aria-describedby="navi-scenario-search">
 					<button class="btn btn-primary flex-shrink-0" id="navi-scenario-search" type="submit">検索</button>
 				</div>
 			</form>

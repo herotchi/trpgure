@@ -57,13 +57,13 @@ class ScenarioController extends Controller
                 'bail',
                 'required',
                 'integer',
-                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のシナリオのみ
+                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のセッションのみ
                 Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC)->where(function ($query) {
                     $today = new Datetime();
                     return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
                 }),
                 Rule::unique('scenarios', 'id')->where('user_friend_code', Auth::user()->friend_code),
-                // 閲覧者がシナリオ主催者をフォローしているか確認
+                // 閲覧者がセッション募集者をフォローしているか確認
                 $this->followed
             ]]
         );
@@ -74,11 +74,11 @@ class ScenarioController extends Controller
 
         $detail = $this->scenario->find($id);
 
-        // 閲覧者がシナリオ主催者をフォローしているか確認する
+        // 閲覧者がセッション募集者をフォローしているか確認する
         $followingFlg = $this->checkFollowingHost($detail);
-        // 閲覧者がシナリオ主催者にフォローされているか確認する
+        // 閲覧者がセッション募集者にフォローされているか確認する
         $followedFlg = $this->checkFollowedHost($detail);
-        // 閲覧者がすでにシナリオに参加しているか確認する
+        // 閲覧者がすでにセッションに参加しているか確認する
         $joiningFlg = $this->checkJoining($detail);
 
         return view('scenario.detail', compact(['detail', 'followingFlg', 'followedFlg', 'joiningFlg']));
@@ -93,7 +93,7 @@ class ScenarioController extends Controller
             $this->scenario->joinScenario($input);
         });
 
-        return redirect()->route('scenarios.detail', ['id' => $input['id']])->with('msg_success', 'シナリオに参加しました。');
+        return redirect()->route('scenarios.detail', ['id' => $input['id']])->with('msg_success', 'セッションに参加しました。');
     }
 
 
@@ -141,7 +141,7 @@ class ScenarioController extends Controller
             $this->scenario->insertScenario($request->validated());
         });
 
-        return redirect()->route('scenarios.manage')->with('msg_success', 'シナリオを登録しました。');
+        return redirect()->route('scenarios.manage')->with('msg_success', 'セッションを募集しました。');
     }
 
 
@@ -174,7 +174,7 @@ class ScenarioController extends Controller
             $this->scenario->updateScenario($input);
         });
 
-        return redirect()->route('scenarios.manage_detail', ['id' => $input['id']])->with('msg_success', 'シナリオを編集しました。');
+        return redirect()->route('scenarios.manage_detail', ['id' => $input['id']])->with('msg_success', 'セッションを編集しました。');
     }
 
 
@@ -186,7 +186,7 @@ class ScenarioController extends Controller
             $this->scenario->deleteScenario($input['id']);
         });
 
-        return redirect()->route('scenarios.manage')->with('msg_success', 'シナリオを削除しました。');
+        return redirect()->route('scenarios.manage')->with('msg_success', 'セッションを削除しました。');
     }
 
 
@@ -197,12 +197,12 @@ class ScenarioController extends Controller
             $this->scenario->cancelScenario($input['id']);
         });
 
-        return redirect()->route('scenarios.list')->with('msg_success', 'シナリオの参加を取り消しました。');
+        return redirect()->route('scenarios.list')->with('msg_success', 'セッションの参加を取り消しました。');
     }
 
 
     /**
-     * 閲覧者がシナリオ主催者をフォローしているか確認する
+     * 閲覧者がセッション募集者をフォローしているか確認する
      *
      * @param App\Models\Scenario $detail
      * @return boolean
@@ -219,7 +219,7 @@ class ScenarioController extends Controller
 
 
     /**
-     * 閲覧者がシナリオ主催者にフォローされているか確認する
+     * 閲覧者がセッション募集者にフォローされているか確認する
      *
      * @param App\Models\Scenario $detail
      * @return boolean
@@ -236,7 +236,7 @@ class ScenarioController extends Controller
 
 
     /**
-     * 閲覧者がシナリオに参加しているか確認する
+     * 閲覧者がセッションに参加しているか確認する
      *
      * @param Scenario $detail
      * @return boolean
@@ -253,7 +253,7 @@ class ScenarioController extends Controller
 
 
     /**
-     * 主催したシナリオに参加者がいるか確認
+     * 募集したセッションに参加者がいるか確認
      *
      * @param Scenario $detail
      * @return boolean

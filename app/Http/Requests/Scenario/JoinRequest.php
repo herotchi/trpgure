@@ -45,12 +45,12 @@ class JoinRequest extends FormRequest
                 'bail',
                 'required',
                 'integer',
-                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のシナリオのみ
+                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のセッションのみ
                 Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC)->where(function ($query) {
                     $today = new Datetime();
                     return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
                 }),
-                // ユーザーとシナリオ主催者が相互フォロー状態
+                // ユーザーとセッション募集者が相互フォロー状態
                 $this->followExchange,
                 // まだ参加していない
                 Rule::unique('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),

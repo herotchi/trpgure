@@ -40,7 +40,7 @@ class Character extends Model
             return $query->where('name', 'like', "%{$data['name']}%");
         });
 
-        // 自分が作成したシナリオのみを表示する
+        // 自分が作成したキャラクターのみを表示する
         $query->where('user_friend_code', Auth::user()->friend_code);
 
         $query->orderBy('updated_at', 'desc');

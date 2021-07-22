@@ -13,7 +13,7 @@
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">最近のシナリオ</div>
+            <div class="card-header">最近のセッション</div>
             <div class="card-body">
                 <div class="list-group">
                     @foreach($scenarios as $scenario)
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="card-footer text-end">
-                <a href="{{ route('scenarios.list') }}">すべてのシナリオ</a>
+                <a href="{{ route('scenarios.list') }}">すべてのセッション</a>
             </div>
         </div>
     </div>

@@ -155,7 +155,7 @@ return [
         'friend_code' => 'フレンドコード',
         'title' => 'タイトル',
         'summary' => '概要',
-        'genre' => 'ジャンル',
+        'genre' => 'システム',
         'platform' => 'プラットフォーム',
         'rec_number_min' => '推奨人数（最小）',
         'rec_number_max' => '推奨人数（最大）',

@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ詳細')
+@section('title', 'セッション詳細')
 
 @section('content')
 
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage') }}">シナリオ管理</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ詳細</li>
+        <li class="breadcrumb-item"><a href="{{ route('scenarios.manage') }}">セッション管理</a></li>
+        <li class="breadcrumb-item active" aria-current="page">セッション詳細</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ詳細</div>
+            <div class="card-header">セッション詳細</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <h5>タイトル</h5>
@@ -25,7 +25,7 @@
                     <span>{!! nl2br(e($detail->summary)) !!}</span>
                 </li>
                 <li class="list-group-item">
-                    <h5>ジャンル</h5>
+                    <h5>システム</h5>
                     <span>{{ ScenarioConsts::GENRE_LIST[$detail->genre] }}</span>
                 </li>
                 <li class="list-group-item">
@@ -85,7 +85,7 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $detail->id }}">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">主催したシナリオを削除しますか？</h5>
+                    <h5 class="modal-title" id="deleteModalLabel">募集したセッションを削除しますか？</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-footer justify-content-center">

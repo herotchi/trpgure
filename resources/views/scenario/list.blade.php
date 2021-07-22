@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ一覧')
+@section('title', 'セッション一覧')
 
 @section('content')
 
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ一覧</li>
+        <li class="breadcrumb-item active" aria-current="page">セッション一覧</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ一覧</div>
+            <div class="card-header">セッション一覧</div>
             <div class="card-body">
                 <form action="{{ route('scenarios.list') }}" method="get" novalidate>
                     <div class="row g-3">
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="friend_code" class="form-label">シナリオ主催者</label>
+                            <label for="friend_code" class="form-label">セッション募集者</label>
                             <select id="friend_code"
                                 class="form-select{{ $errors->has('friend_code') ? ' is-invalid' : '' }}"
                                 name="friend_code">
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="genre" class="form-label">ジャンル</label>
+                            <label for="genre" class="form-label">システム</label>
                             <select id="genre" class="form-select{{ $errors->has('genre') ? ' is-invalid' : '' }}"
                                 name="genre">
                                 <option value="">---</option>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-12 text-center mt-5">
-                            <button class="btn btn-primary w-50" type="submit">シナリオ検索</button>
+                            <button class="btn btn-primary w-50" type="submit">セッション検索</button>
                             <a class="btn btn-secondary" href="{{ route('top') }}" role="button">戻る</a>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
-                            <th>シナリオ主催者</th>
+                            <th>セッション募集者</th>
                         </tr>
                     </thead>
                     <tbody>

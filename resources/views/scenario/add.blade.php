@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'シナリオ主催')
+@section('title', 'セッション募集')
 
 @push('datepicker')
     <link href="{{ asset('css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
@@ -23,13 +23,13 @@
 <nav aria-label="パンくずリスト">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('top') }}">ホーム</a></li>
-        <li class="breadcrumb-item active" aria-current="page">シナリオ主催</li>
+        <li class="breadcrumb-item active" aria-current="page">セッション募集</li>
     </ol>
 </nav>
 <div class="row justify-content-center g-3">
     <div class="col">
         <div class="card">
-            <div class="card-header">シナリオ主催</div>
+            <div class="card-header">セッション募集</div>
             <div class="card-body">
                 <form action="{{ route('scenarios.insert') }}" method="post" novalidate>
                     @csrf
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label for="genre" class="form-label">ジャンル
+                            <label for="genre" class="form-label">システム
                                 <span class="text-danger font-weight-bold">※</span>
                             </label>
                             <select id="genre" class="form-select{{ $errors->has('genre') ? ' is-invalid' : '' }}"

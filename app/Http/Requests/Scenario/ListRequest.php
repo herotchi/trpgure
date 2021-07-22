@@ -80,7 +80,7 @@ class ListRequest extends FormRequest
     public function attributes()
     {
         return [
-            'friend_code' => 'シナリオ主催者'
+            'friend_code' => 'セッション募集者'
         ];
     }
 }

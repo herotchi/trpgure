@@ -52,7 +52,7 @@ class Scenario extends Model
 
 
     /**
-     * トップ画面に表示する最近の自分主催以外のフレンドが主催したシナリオ一覧を取得する
+     * トップ画面に表示する最近の自分主催以外のフレンドが主催したセッション一覧を取得する
      *
      * @param array $friendCodes フォローしているフレンドのコード一覧
      * @return object $list
@@ -64,9 +64,9 @@ class Scenario extends Model
         $query->whereIn('user_friend_code', $friendCodes);
         $query->where('user_friend_code', '<>', Auth::user()->friend_code);
         $query->where('public_flg', TopConsts::PUBLIC_FLG_PUBLIC);
-        // 募集開始日が現在と同じか過去のシナリオのみ
+        // 募集開始日が現在と同じか過去のセッションのみ
         $query->where('part_period_start', '<=', $today->format('Y-m-d'));
-        // 募集終了日が現在と同じか未来のシナリオのみ
+        // 募集終了日が現在と同じか未来のセッションのみ
         $query->where('part_period_end', '>=', $today->format('Y-m-d'));
         $query->orderBy('part_period_end', 'asc');
         $list = $query->with('user')->get();
@@ -76,7 +76,7 @@ class Scenario extends Model
 
 
     /**
-     * フォローしているフレンドが主催しているシナリオのみ取得する
+     * フォローしているフレンドが募集しているセッションのみ取得する
      *
      * @param array $friendCodes フォローしているフレンドのコード一覧
      * @param array $data
@@ -96,13 +96,13 @@ class Scenario extends Model
         $query->when(Arr::exists($data, 'genre') && $data['genre'], function ($query) use ($data) {
             return $query->where('scenarios.genre', $data['genre']);
         });
-        // 他人が作成したシナリオのみを表示する
+        // 他人が募集したセッションのみを表示する
         $query->where('scenarios.user_friend_code', '<>', Auth::user()->friend_code);
-        // シナリオ一覧では公開中のシナリオのみ表示する
+        // セッション一覧では公開中のセッションのみ表示する
         $query->where('scenarios.public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC);
-        // 募集開始日が現在と同じか過去のシナリオのみ
+        // 募集開始日が現在と同じか過去のセッションのみ
         $query->where('part_period_start', '<=', $today->format('Y-m-d'));
-        // 募集終了日が現在と同じか未来のシナリオのみ
+        // 募集終了日が現在と同じか未来のセッションのみ
         $query->where('part_period_end', '>=', $today->format('Y-m-d'));
         $query->orderBy('scenarios.updated_at', 'desc');
         $list = $query->with('user')->paginate(ScenarioConsts::PAGENATE_LIST_LIMIT);
@@ -131,7 +131,7 @@ class Scenario extends Model
             return $query->where('public_flg', $data['public_flg']);
         });
 
-        // 自分が作成したシナリオのみを表示する
+        // 自分が募集したセッションのみを表示する
         $query->where('user_friend_code', Auth::user()->friend_code);
 
         $query->orderBy('updated_at', 'desc');
@@ -152,7 +152,7 @@ class Scenario extends Model
 
 
     /**
-     * シナリオ参加処理
+     * セッション参加処理
      *
      * @param array $data
      * @return void

@@ -33,7 +33,7 @@ class CancelRequest extends FormRequest
                 'bail', 
                 'required', 
                 'integer', 
-                // 公開中のシナリオのみ
+                // 公開中のセッションのみ
                 Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC),
                 // すでに参加している
                 Rule::exists('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),
