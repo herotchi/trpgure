@@ -2,16 +2,6 @@
 
 @section('title', 'セッション詳細')
 
-@push('datepicker')
-<script type="text/javascript" defer>
-$(document).ready(function() {
-    @if ($errors->any())
-    $('#joinModal').modal('show');    
-    @endif
-});
-</script>
-@endpush
-
 @section('content')
 
 <nav aria-label="パンくずリスト">
@@ -70,20 +60,33 @@ $(document).ready(function() {
                     <h5>注意事項</h5>
                     <span>{!! nl2br(e($detail->caution)) !!}</span>
                 </li>
+                <li class="list-group-item">
+                    <h5>セッション参加者</h5>
+                    <span>
+                        @foreach ($detail->characters as $character)
+                        @if ($character->user_friend_code == Auth::user()->friend_code)
+                        {{ $character->name }}
+                        @else
+                        <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank" rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                        @endif
+                        （{{ $character->user->user_name }}）@if (!$loop->last),&ensp;@endif
+                        @endforeach
+                    </span>
+                </li>
             </ul>
             <div class="col-12 text-center my-4">
                 @if ($followingFlg && $followedFlg && $joiningFlg)
                 <button class="btn btn-outline-danger w-50" type="button" data-bs-toggle="modal"
                     data-bs-target="#cancelModal">参加を取り消す</button>
                 @elseif ($followingFlg && $followedFlg && !$joiningFlg)
-                <button class="btn btn-primary w-50" type="button" data-bs-toggle="modal"
-                    data-bs-target="#joinModal">参加する</button>
+                <a href="{{ route('scenarios.join', ['id' => $detail->id]) }}" class="btn btn-primary w-50" role="button">参加する</a>
                 @endif
                 <a class="btn btn-secondary" href="{{ route('scenarios.list') }}" role="button">戻る</a>
             </div>
         </div>
     </div>
 </div>
+{{-- 
 <!-- 参加モーダルの設定 -->
 <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel">
     <div class="modal-dialog modal-dialog-centered">
@@ -110,11 +113,26 @@ $(document).ready(function() {
                             <div class="invalid-feedback">{{ $errors->first('name') }}</div>
                         </div>
                         <div class="col-md-12">
-                            <label for="character_sheet" class="form-label">キャラクターシート</label>
-                            <input type="text" id="character_sheet"
-                                class="form-control{{ $errors->has('character_sheet') ? ' is-invalid' : '' }}"
-                                name="character_sheet" value="{{ old('character_sheet') }}">
-                            <div class="invalid-feedback">{{ $errors->first('character_sheet') }}</div>
+                            <label for="character_sheet" class="form-label">キャラクターシート
+                                @include('layouts.question')
+                            </label>
+                            <div class="input-group">
+                                <select id="service"
+                                    class="form-select{{ $errors->has('service') ? ' is-invalid' : '' }}"
+                                    name="service" aria-describedby="characterSheetBlock">
+                                    <option value="">--</option>
+                                    @foreach(CharacterConsts::SERVICE_DOMAIN_LIST as $key => $value)
+                                    <option value="{{ $key }}" @if(old('service')==$key)
+                                        selected="selected" @endif>
+                                        {{ $value }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" id="character_sheet"
+                                    class="form-control{{ $errors->has('character_sheet') ? ' is-invalid' : '' }}"
+                                    name="character_sheet" value="{{ old('character_sheet') }}" aria-describedby="characterSheetBlock">
+                                <div class="invalid-feedback">{{ $errors->first('service') }}</div>
+                                <div class="invalid-feedback">{{ $errors->first('character_sheet') }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -126,6 +144,7 @@ $(document).ready(function() {
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+ --}}
 <!-- 参加取り消しモーダルの設定 -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel">
     <div class="modal-dialog modal-dialog-centered">

@@ -18,25 +18,26 @@
                 <div class="list-group">
                     @foreach($scenarios as $scenario)
                     <a href="{{ route('scenarios.detail', ['id' => $scenario->id]) }}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1 ml-4">
+                            <span>募集者：{{ $scenario->user->user_name }}</span>
+                        </p>
+                        <div class="d-flex">
                             <h5 class="mb-1">{{ $scenario->title }}</h5>
-                            <span>主催：{{ $scenario->user->user_name }}</span>
+                            
                         </div>
                         <p class="mb-1 ml-4 text-truncate">
                             <span class="font-weight-bold">概要</span>：{{ $scenario->summary }}
-                        </p>
-                        <p class="mb-1 ml-4">
-                            <span class="font-weight-bold">募集期間</span>：
-                            {{ $scenario->part_period_start->format('Y/m/d') }}～{{ $scenario->part_period_end->format('Y/m/d') }}
                         </p>
                         <p class="mb-1 ml-4"><span class="font-weight-bold">推奨人数</span>：
                             @if ($scenario->rec_number_min === $scenario->rec_number_max)
                             {{ $scenario->rec_number_min }}人
                             @else
-                            {{ $scenario->rec_number_min }}人
-                            ～
-                            {{ $scenario->rec_number_max }}人
+                            {{ $scenario->rec_number_min }}～{{ $scenario->rec_number_max }}人
                             @endif
+                        </p>
+                        <p class="mb-1 ml-4">
+                            <span class="font-weight-bold">募集期間</span>：
+                            {{ $scenario->part_period_start->format('Y/m/d') }}～{{ $scenario->part_period_end->format('Y/m/d') }}
                         </p>
                     </a>
                     @endforeach

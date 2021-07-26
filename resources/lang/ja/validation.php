@@ -166,6 +166,7 @@ return [
         'gm_memo' => 'GM用メモ',
         'public_flg' => '公開フラグ',
         'name' => 'キャラクター名',
+        'service' => 'サービス',
         'character_sheet' => 'キャラクターシート',
     ],
 

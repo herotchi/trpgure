@@ -64,6 +64,15 @@
                     <h5>公開フラグ</h5>
                     <span>{{ ScenarioConsts::PUBLIC_FLG_LIST[$detail->public_flg] }}</span>
                 </li>
+                <li class="list-group-item">
+                    <h5>セッション参加者</h5>
+                    <span>
+                        @foreach ($detail->characters as $character)
+                        <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank" rel="noopener noreferrer">{{ $character->name }}</a>
+                        （{{ $character->user->user_name }}）@if (!$loop->last),&ensp;@endif
+                        @endforeach
+                    </span>
+                </li>
             </ul>
             <div class="col-12 text-center my-4">
                 <a class="btn btn-primary w-50" href="{{ route('scenarios.edit', ['id' => $detail->id]) }}"

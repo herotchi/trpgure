@@ -21,7 +21,6 @@ class CreateScenariosTable extends Migration
             $table->text('summary')->nullable();						// 概要
             $table->date('part_period_start');				            // 参加募集開始日時
             $table->date('part_period_end');				            // 参加募集終了日時
-            $table->text('possible_date')->nullable();				    // 実施候補日
             $table->tinyInteger('genre')->unsigned();					// システム
             $table->tinyInteger('platform')->unsigned();				// プラットフォーム
             $table->integer('rec_number_min')->unsigned()->nullable();	// 最小推奨人数

@@ -69,16 +69,24 @@
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
-                            <th>セッション募集者</th>
+                            <th>参加募集期間</th>
+                            <th>推奨参加人数</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($scenarios as $scenario)
                         <tr>
-                            <th scope="rol">
+                            <td scope="rol">
                                 <a href="{{ route('scenarios.detail', ['id' => $scenario->id]) }}">{{ $scenario->title }}</a>
-                            </th>
-                            <td>{{ $scenario->user->user_name }}</td>
+                            </td>
+                            <td>{{ $scenario->part_period_start->format('Y/m/d') }}～{{ $scenario->part_period_end->format('Y/m/d') }}</td>
+                            <td>
+                                @if ($scenario->rec_number_min == $scenario->rec_number_max)
+                                {{ $scenario->rec_number_min }}人
+                                @else
+                                {{ $scenario->rec_number_min }}～{{ $scenario->rec_number_max }}人
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -88,5 +96,4 @@
         </div>
     </div>
 </div>
-
 @endsection

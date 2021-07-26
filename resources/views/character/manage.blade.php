@@ -2,6 +2,16 @@
 
 @section('title', 'キャラクター管理')
 
+@push('delete')
+<script type="text/javascript" defer>
+    $(document).ready(function() {
+        $(document).on("click", "button#deleteCharacter", function(){
+            $('input[name="id"]').val($(this).data('id'));
+        });
+    });
+</script>
+@endpush
+
 @section('content')
 
 <nav aria-label="パンくずリスト">
@@ -42,14 +52,29 @@
                     <thead>
                         <tr>
                             <th scope="col">キャラクター名</th>
+                            <th>参加セッション名</th>
+                            <th>セッション募集者</th>
+                            <th></th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($characters as $character)
                         <tr>
-                            <th scope="rol">
-                                <a href="{{ route('characters.manage_detail', ['id' => $character->id]) }}">{{ $character->name }}</a>
-                            </th>
+                            <td scope="rol" class="align-middle">
+                                <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank"
+                                    rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                            </td>
+                            <td class="align-middle">
+                                {{ $character->scenario->title }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $character->scenario->user->user_name }}
+                            </td>
+                            <td class="align-middle float-end">
+                                <a class="btn btn-sm btn-primary" href="{{ route('characters.edit', ['id' => $character->id]) }}">編集</a>
+                                <button type="button" id="deleteCharacter" class="btn btn-sm btn-outline-danger ms-3" data-id="{{ $character->id }}" data-bs-toggle="modal" data-bs-target="#deleteModal">削除</button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -59,5 +84,23 @@
         </div>
     </div>
 </div>
-
+<!-- モーダルの設定 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('characters.delete') }}" novalidate>
+                @csrf
+                <input type="hidden" name="id" value="">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">作成したキャラクターを削除しますか？</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-danger w-50" type="submit">削除する</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                </div><!-- /.modal-footer -->
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @endsection

@@ -37,20 +37,6 @@
                             </select>
                             <div class="invalid-feedback">{{ $errors->first('genre') }}</div>
                         </div>
-
-                        <div class="col-md-6">
-                            <label for="platform" class="form-label">プラットフォーム</label>
-                            <select id="platform" class="form-select{{ $errors->has('platform') ? ' is-invalid' : '' }}"
-                                name="platform">
-                                <option value="">---</option>
-                                @foreach(ScenarioConsts::PLATFORM_LIST as $key => $value)
-                                <option value="{{ $key }}" @if(old('platform', $input['platform'])==$key) selected="selected" @endif>
-                                    {{ $value }}</option>
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">{{ $errors->first('platform') }}</div>
-                        </div>
-
                         <div class="col-md-6">
                             <label for="public_flg" class="form-label">公開フラグ</label>
                             <select id="public_flg" class="form-select{{ $errors->has('public_flg') ? ' is-invalid' : '' }}"
@@ -81,16 +67,26 @@
                     <thead>
                         <tr>
                             <th scope="col">タイトル</th>
-                            <th>仮タイトル</th>
+                            <th>参加募集期間</th>
+                            <th>推奨参加人数</th>
+                            <th>システム</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($scenarios as $scenario)
                         <tr>
-                            <th scope="rol">
+                            <td scope="rol">
                                 <a href="{{ route('scenarios.manage_detail', ['id' => $scenario->id]) }}">{{ $scenario->title }}</a>
-                            </th>
-                            <td>{{ $scenario->user->user_name }}</td>
+                            </td>
+                            <td>{{ $scenario->part_period_start->format('Y/m/d') }}～{{ $scenario->part_period_end->format('Y/m/d') }}</td>
+                            <td>
+                                @if ($scenario->rec_number_min == $scenario->rec_number_max)
+                                {{ $scenario->rec_number_min }}人
+                                @else
+                                {{ $scenario->rec_number_min }}～{{ $scenario->rec_number_max }}人
+                                @endif
+                            </td>
+                            <td>{{ ScenarioConsts::GENRE_LIST[$scenario->genre] }}</td>
                         </tr>
                         @endforeach
                     </tbody>

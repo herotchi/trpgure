@@ -5,10 +5,7 @@ namespace App\Http\Requests\Scenario;
 use Illuminate\Foundation\Http\FormRequest;
 
 use App\Consts\ScenarioConsts;
-use App\Consts\UserConsts;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
-use App\Rules\AlphaNumJp;
 use Illuminate\Support\Arr;
 
 class ManageRequest extends FormRequest
@@ -18,14 +15,9 @@ class ManageRequest extends FormRequest
     private $forms = [
         'title',
         'genre',
-        'platform',
         'public_flg',
     ];
 
-    public function __construct(AlphaNumJp $alphaNumJp)
-    {
-        $this->alphaNumJp = $alphaNumJp;
-    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -49,9 +41,6 @@ class ManageRequest extends FormRequest
             'title' => 'bail|nullable|string|max:' . ScenarioConsts::TITLE_LENGTH_MAX,
             'genre' => [
                 'bail', 'nullable', 'integer', Rule::in(array_keys(ScenarioConsts::GENRE_LIST))
-            ],
-            'platform' => [
-                'bail', 'nullable', 'integer', Rule::in(array_keys(ScenarioConsts::PLATFORM_LIST))
             ],
             'public_flg' => [
                 'bail', 'nullable', 'integer', Rule::in(array_keys(ScenarioConsts::PUBLIC_FLG_LIST))

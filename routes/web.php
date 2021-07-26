@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/scenarios/list', [ScenarioController::class, 'list'])->name('scenarios.list');
     Route::get('/scenarios/detail/{id}', [ScenarioController::class, 'detail'])->name('scenarios.detail');
-    Route::post('/scenarios/join', [ScenarioController::class, 'join'])->name('scenarios.join');
+    Route::get('/scenarios/join/{id}', [ScenarioController::class, 'join'])->name('scenarios.join');
     Route::get('/scenarios/manage', [ScenarioController::class, 'manage'])->name('scenarios.manage');
     Route::get('/scenarios/manage_detail/{id}', [ScenarioController::class, 'manage_detail'])->name('scenarios.manage_detail');
     Route::get('/scenarios/add', [ScenarioController::class, 'add'])->name('scenarios.add');
@@ -70,8 +70,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/scenarios/cancel', [ScenarioController::class, 'cancel'])->name('scenarios.cancel');
 
     Route::get('/characters/manage', [CharacterController::class, 'manage'])->name('characters.manage');
-    Route::get('/characters/manage_detail/{id}', [CharacterController::class, 'manage_detail'])->name('characters.manage_detail');
     Route::get('/characters/edit/{id}', [CharacterController::class, 'edit'])->name('characters.edit');
+    Route::post('/characters/insert', [CharacterController::class, 'insert'])->name('characters.insert');
     Route::post('/characters/update', [CharacterController::class, 'update'])->name('characters.update');
     Route::post('/characters/delete', [CharacterController::class, 'delete'])->name('characters.delete');
 });

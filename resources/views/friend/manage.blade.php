@@ -4,10 +4,12 @@
 
 @push('remove')
 <script type="text/javascript">
-    function modal(userName, friendCode) {
-            $('span#user_name').text(userName);
-            $("input[name='friend_code']").val(friendCode);
-        }
+    $(document).ready(function() {
+        $(document).on("click", "button.removeFriend", function(){
+            $('span#user_name').text($(this).data('user_name'));
+            $('input[name="friend_code"]').val($(this).data('friend_code'));
+        });
+    });
 </script>
 @endpush
 
@@ -48,9 +50,8 @@
                                         {{ $following->user_name }}
                                     </div>
                                     <div class="col-sm-3 col-5 text-end">
-                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#removeModal"
-                                            onclick="modal('{{ $following->user_name }}', '{{ $following->friend_code }}')">
+                                        <button type="button" class="removeFriend btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#removeModal" data-user_name="{{ $following->user_name }}" data-friend_code="{{ $following->friend_code }}">
                                             解除
                                         </button>
                                     </div>

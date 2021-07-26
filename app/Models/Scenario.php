@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Consts\TopConsts;
 use App\Consts\ScenarioConsts;
-use App\Consts\JoinHistoryConsts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
@@ -29,7 +28,6 @@ class Scenario extends Model
         'summary',
         'part_period_start',
         'part_period_end',
-        'possible_date',
         'genre',
         'platform',
         'rec_number_min',
@@ -123,10 +121,6 @@ class Scenario extends Model
             return $query->where('genre', $data['genre']);
         });
 
-        $query->when(Arr::exists($data, 'platform') && $data['platform'], function ($query) use ($data) {
-            return $query->where('platform', $data['platform']);
-        });
-
         $query->when(Arr::exists($data, 'public_flg') && $data['public_flg'], function ($query) use ($data) {
             return $query->where('public_flg', $data['public_flg']);
         });
@@ -149,24 +143,6 @@ class Scenario extends Model
 
         $this->save();
     }
-
-
-    /**
-     * セッション参加処理
-     *
-     * @param array $data
-     * @return void
-     */
-    public function joinScenario(array $data)
-    {
-        $scenario = $this::find($data['id']);
-        $scenario->characters()->create([
-            'user_friend_code' => Auth::user()->friend_code,
-            'name' => $data['name'], 
-            'character_sheet' => $data['character_sheet'], 
-        ]);
-    }
-
 
 
     public function cancelScenario($id)

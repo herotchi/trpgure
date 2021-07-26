@@ -238,6 +238,7 @@ return [
         'TopConsts' => App\Consts\TopConsts::class,
         'UserConsts' => App\Consts\UserConsts::class,
         'ScenarioConsts' => App\Consts\ScenarioConsts::class,
+        'CharacterConsts' => App\Consts\CharacterConsts::class,
         'PaginationConsts' => App\Consts\PaginationConsts::class,
 
     ],

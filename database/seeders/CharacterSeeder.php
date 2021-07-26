@@ -20,7 +20,8 @@ class CharacterSeeder extends Seeder
             'user_friend_code' => '12345678901b',
             'scenario_id' => 1,
             'name' => 'キャラクター１',
-            'character_sheet' => 'https://www.youtube.com',
+            'service' => 1,
+            'character_sheet' => '/char/1765178/view',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -29,7 +30,8 @@ class CharacterSeeder extends Seeder
             'user_friend_code' => '12345678901c',
             'scenario_id' => 1,
             'name' => 'キャラクター２',
-            'character_sheet' => 'https://www.youtube.com',
+            'service' => 2,
+            'character_sheet' => '/3765301',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -38,7 +40,8 @@ class CharacterSeeder extends Seeder
             'user_friend_code' => '12345678901b',
             'scenario_id' => 2,
             'name' => 'キャラクター３',
-            'character_sheet' => 'https://www.youtube.com',
+            'service' => 3,
+            'character_sheet' => '/view/21664',
             'created_at' => now(),
             'updated_at' => now()
         ]);

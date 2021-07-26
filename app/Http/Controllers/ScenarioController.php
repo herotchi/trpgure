@@ -12,10 +12,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Rules\Followed;
+use App\Rules\FollowExchange;
 use App\Http\Requests\Scenario\AddRequest;
 use App\Http\Requests\Scenario\EditRequest;
 use App\Http\Requests\Scenario\ListRequest;
-use App\Http\Requests\Scenario\JoinRequest;
 use App\Http\Requests\Scenario\ManageRequest;
 use App\Http\Requests\Scenario\DeleteRequest;
 use App\Http\Requests\Scenario\CancelRequest;
@@ -30,11 +30,12 @@ class ScenarioController extends Controller
     protected $followed;
 
 
-    public function __construct(Scenario $scenario, User $user, Followed $followed)
+    public function __construct(Scenario $scenario, User $user, Followed $followed, FollowExchange $followExchange)
     {
         $this->scenario = $scenario;
         $this->user = $user;
         $this->followed = $followed;
+        $this->followExchange = $followExchange;
     }
 
 
@@ -62,6 +63,7 @@ class ScenarioController extends Controller
                     $today = new Datetime();
                     return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
                 }),
+                // 自分が募集したセッションではない
                 Rule::unique('scenarios', 'id')->where('user_friend_code', Auth::user()->friend_code),
                 // 閲覧者がセッション募集者をフォローしているか確認
                 $this->followed
@@ -72,7 +74,7 @@ class ScenarioController extends Controller
             return redirect()->route('scenarios.list')->with('msg_failure', '不正な値が入力されました。');
         }
 
-        $detail = $this->scenario->find($id);
+        $detail = $this->scenario->with('characters.user')->find($id);
 
         // 閲覧者がセッション募集者をフォローしているか確認する
         $followingFlg = $this->checkFollowingHost($detail);
@@ -85,15 +87,33 @@ class ScenarioController extends Controller
     }
 
 
-    public function join(JoinRequest $request)
+    public function join($id)
     {
-        $input = $request->validated();
+        $validator = Validator::make(
+            ['id' => $id],
+            ['id' => [
+                'bail',
+                'required',
+                'integer',
+                // 公開中で募集開始日が現在と同じか過去かつ募集終了日が現在と同じか未来のセッションのみ
+                Rule::exists('scenarios', 'id')->where('public_flg', ScenarioConsts::PUBLIC_FLG_PUBLIC)->where(function ($query) {
+                    $today = new Datetime();
+                    return $query->where('part_period_start', '<=', $today->format('Y-m-d'))->where('part_period_end', '>=', $today->format('Y-m-d'));
+                }),
+                // ユーザーとセッション募集者が相互フォロー状態
+                $this->followExchange,
+                // まだ参加していない
+                Rule::unique('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),
+            ]]
+        );
 
-        DB::transaction(function () use ($input) {
-            $this->scenario->joinScenario($input);
-        });
+        if ($validator->fails()) {
+            return redirect()->route('scenarios.list')->with('msg_failure', '不正な値が入力されました。');
+        }
 
-        return redirect()->route('scenarios.detail', ['id' => $input['id']])->with('msg_success', 'セッションに参加しました。');
+        $detail = $this->scenario->find($id);
+
+        return view('scenario.join', compact('detail'));
     }
 
 
@@ -122,7 +142,7 @@ class ScenarioController extends Controller
             return redirect()->route('scenarios.manage')->with('msg_failure', '不正な値が入力されました。');
         }
 
-        $detail = $this->scenario->find($id);
+        $detail = $this->scenario->with('characters.user')->find($id);
         $joinedFlg = $this->checkJoined($detail);
 
         return view('scenario.manage_detail', compact(['detail', 'joinedFlg']));

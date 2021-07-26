@@ -56,7 +56,8 @@ class JoinRequest extends FormRequest
                 Rule::unique('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),
             ],
             'name' => 'bail|required|string|min:' . CharacterConsts::NAME_LENGTH_MIN . '|max:' . CharacterConsts::NAME_LENGTH_MAX,
-            'character_sheet' => 'bail|nullable|string|min:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MIN . '|max:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MAX,
+            'service' => ['bail', 'nullable', 'integer', Rule::in(array_keys(CharacterConsts::SERVICE_DOMAIN_LIST))],
+            'character_sheet' => 'bail|required_with:service|string|min:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MIN . '|max:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MAX,
         ];
     }
 
@@ -65,7 +66,7 @@ class JoinRequest extends FormRequest
     public function withValidator(\Illuminate\Validation\Validator $validator)
     {
         $validator->after(function ($validator) {
-            $errors = $validator->errors();var_dump($errors);exit();
+            $errors = $validator->errors();
             if ($errors->has('id')) {
                 $this->redirectRoute = 'scenarios.list';
                 session()->flash('msg_failure', '不正な値が入力されました。');

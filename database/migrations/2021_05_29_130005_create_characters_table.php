@@ -14,11 +14,12 @@ class CreateCharactersTable extends Migration
     public function up()
     {
         Schema::create('characters', function (Blueprint $table) {
-            $table->id();                                       // シーケンスID
-            $table->char('user_friend_code', 12);               // フレンドコード
-            $table->foreignId('scenario_id')->constrained();    // シナリオID
-            $table->string('name', 100);                        // キャラクター名
-            $table->text('character_sheet')->nullable();        // キャラクターシートURL
+            $table->id();                                               // シーケンスID
+            $table->char('user_friend_code', 12);                       // フレンドコード
+            $table->foreignId('scenario_id')->constrained();            // シナリオID
+            $table->string('name', 100);                                // キャラクター名
+            $table->tinyInteger('service')->unsigned()->nullable();     // サービス
+            $table->string('character_sheet')->nullable();                // キャラクターシートURL
             $table->datetimeTz('created_at');
             $table->datetimeTz('updated_at');
 

@@ -17,8 +17,8 @@ class Character extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'user_friend_code',
         'name',
+        'service',
         'character_sheet',
     ];
 
@@ -45,16 +45,31 @@ class Character extends Model
 
         $query->orderBy('updated_at', 'desc');
 
-        $lists = $query->paginate(CharacterConsts::PAGENATE_MANAGE_LIMIT);
+        $lists = $query->with('scenario.user')->paginate(CharacterConsts::PAGENATE_MANAGE_LIMIT);
 
         return $lists;
+    }
+
+
+    /**
+     * セッション参加処理
+     *
+     * @param array $data
+     * @return void
+     */
+    public function joinScenario(array $data)
+    {
+        $this->user_friend_code = Auth::user()->friend_code;
+        $this->scenario_id = $data['id'];
+        $this->fill($data);
+
+        $this->save();
     }
 
 
     public function updateCharacter(array $data)
     {
         $character = $this::find($data['id']);
-        $character->fillable(['name', 'character_sheet']);
         $character->fill($data)->save();
     }
 
