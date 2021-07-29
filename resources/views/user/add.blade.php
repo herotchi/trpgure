@@ -14,8 +14,7 @@
 @section('content')
 <div class="form-add-user">
     <div class="py-3 text-center">
-        <img class="mb-4" src="https://getbootstrap.jp/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72"
-            height="57">
+        <img class="mb-4" src="{{ asset('img/icon.png') }}" alt="" width="57" height="57">
         <h1 class="h3 mb-3 fw-normal">アカウント作成</h1>
     </div>
     <form method="POST" action="{{ route('users.insert') }}" novalidate>
