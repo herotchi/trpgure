@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="/">TRPGURE</a>
+		<a class="navbar-brand" href="{{ route('top') }}">TRPGURE<small class="border border-danger text-danger rounded">beta</small></a>
 		<button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas"
 			aria-label="navbar-toggler">
 			<span class="navbar-toggler-icon"></span>
