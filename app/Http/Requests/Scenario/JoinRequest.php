@@ -56,8 +56,8 @@ class JoinRequest extends FormRequest
                 Rule::unique('characters', 'scenario_id')->where('user_friend_code', Auth::user()->friend_code),
             ],
             'name' => 'bail|required|string|min:' . CharacterConsts::NAME_LENGTH_MIN . '|max:' . CharacterConsts::NAME_LENGTH_MAX,
-            'service' => ['bail', 'nullable', 'integer', Rule::in(array_keys(CharacterConsts::SERVICE_DOMAIN_LIST))],
-            'character_sheet' => 'bail|required_with:service|string|min:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MIN . '|max:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MAX,
+            'service' => ['bail', 'nullable', 'required_with:character_sheet', 'integer', Rule::in(array_keys(CharacterConsts::SERVICE_DOMAIN_LIST))],
+            'character_sheet' => 'bail|nullable|required_with:service|string|min:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MIN . '|max:' . CharacterConsts::CHARACTER_SHEET_LENGTH_MAX,
         ];
     }
 
