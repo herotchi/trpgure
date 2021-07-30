@@ -40,7 +40,9 @@
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
+    @if (Auth::check())
     <script src="{{ asset('js/offcanvas.js') }}" defer></script>
+    @endif
     <script>
         function copyMyFriendCode(friendCode) {
             navigator.clipboard.writeText(friendCode)
