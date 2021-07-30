@@ -2,4 +2,8 @@
 
 @section('title', __('プライバシーポリシー'))
 
+@section('content')
+
 @include('layouts.privacy_policy_block')
+
+@endsection
