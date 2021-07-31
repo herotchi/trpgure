@@ -8,7 +8,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="carouselHowToUse" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-interval="false">
-					<!-- インジケータの設定 -->
+					{{-- <!-- インジケータの設定 -->
 					<div class="carousel-indicators">
 						<button type="button" data-bs-target="#ccarouselHowToUse" data-bs-slide-to="0"
 							class="active" aria-current="true" aria-label="スライド 1"></button>
@@ -16,7 +16,7 @@
 							aria-label="スライド 2"></button>
 						<button type="button" data-bs-target="#carouselHowToUse" data-bs-slide-to="2"
 							aria-label="スライド 3"></button>
-					</div>
+					</div> --}}
 					<!-- スライドさせる画像の設定 -->
 					<div class="carousel-inner">
 						<div class="carousel-item active">
@@ -27,6 +27,27 @@
 						</div><!-- /.carousel-item -->
 						<div class="carousel-item">
 							<img src="{{ asset('img/3.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/4.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/5.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/6.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/7.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/8.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/9.png') }}" class="img-fluid" alt="">
+						</div><!-- /.carousel-item -->
+						<div class="carousel-item">
+							<img src="{{ asset('img/10.png') }}" class="img-fluid" alt="">
 						</div><!-- /.carousel-item -->
 					</div><!-- /.carousel-inner -->
 					<!-- スライドコントロールの設定 -->
