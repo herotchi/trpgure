@@ -23,6 +23,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    @include('layouts.ga')
 </head>
 
 <body>

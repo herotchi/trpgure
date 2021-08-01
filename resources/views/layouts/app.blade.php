@@ -52,6 +52,7 @@
     @stack('remove')
     @stack('datepicker')
     @stack('delete')
+    @include('layouts.ga')
 </head>
 
 <body>
