@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $indexFlg = true;
+@endphp
+
 @section('title', 'TOP')
 
 @section('content')

@@ -16,6 +16,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
+
     <!-- Custom styles -->
     <link href="{{ asset('css/offcanvas.css') }}" rel="stylesheet">
     @stack('login')
@@ -31,6 +32,7 @@
             border: 0;
         }
     </style>
+
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
