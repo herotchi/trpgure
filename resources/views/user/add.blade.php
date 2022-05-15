@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    $indexFlg = true;
+@endphp
+
 @section('title', 'アカウント作成')
 
 @push('add_user')
