@@ -28,6 +28,7 @@ class ScenarioController extends Controller
     protected $scenario;
     protected $user;
     protected $followed;
+    protected $followExchange;
 
 
     public function __construct(Scenario $scenario, User $user, Followed $followed, FollowExchange $followExchange)
