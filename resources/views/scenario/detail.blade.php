@@ -67,9 +67,15 @@
                         @if ($character->user_friend_code == Auth::user()->friend_code)
                         {{ $character->name }}
                         @else
-                        <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank" rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                            @if(empty($character->service) || empty($character->character_sheet))
+                            {{ $character->name }}
+                            @else
+                            <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" 
+                                target="_blank" rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                            @endif
                         @endif
-                        （{{ $character->user->user_name }}）@if (!$loop->last),&ensp;@endif
+                        （{{ $character->user->user_name }}）
+                        @if (!$loop->last),&ensp;@endif
                         @endforeach
                     </span>
                 </li>

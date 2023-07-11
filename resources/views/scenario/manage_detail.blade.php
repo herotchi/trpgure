@@ -68,8 +68,14 @@
                     <h5>セッション参加者</h5>
                     <span>
                         @foreach ($detail->characters as $character)
-                        <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank" rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
-                        （{{ $character->user->user_name }}）@if (!$loop->last),&ensp;@endif
+                        @if(empty($character->service) || empty($character->character_sheet))
+                        {{ $character->name }}
+                        @else
+                        <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" 
+                            target="_blank" rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                        @endif
+                        （{{ $character->user->user_name }}）
+                        @if (!$loop->last),&ensp;@endif
                         @endforeach
                     </span>
                 </li>
