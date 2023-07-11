@@ -62,8 +62,12 @@
                         @foreach ($characters as $character)
                         <tr>
                             <td scope="rol" class="align-middle">
+                                @if(empty($character->service) || empty($character->character_sheet))
+                                {{ $character->name }}
+                                @else
                                 <a href="https://{{ CharacterConsts::SERVICE_DOMAIN_LIST[$character->service] }}{{ $character->character_sheet }}" target="_blank"
                                     rel="noopener noreferrer">{{ $character->name }}@include('layouts.blank')</a>
+                                @endif
                             </td>
                             <td class="align-middle">
                                 {{ $character->scenario->title }}
